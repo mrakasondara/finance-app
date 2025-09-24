@@ -1,4 +1,10 @@
 @import "tailwindcss";
-body {
-  background-color: #ffffff;
+@plugin "daisyui";
+@theme {
+  --color-main: #59ac77;
+}
+
+body,
+html {
+  background-color: var(--color-gray-100);
 }
