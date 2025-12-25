@@ -1,40 +1,57 @@
+import { Badge } from "../ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+
 const SubscriptionsTable = () => {
   return (
-    <table className="table table-sm md:table-md">
-      <thead className="bg-main text-white">
-        <tr>
-          <th>Subscription</th>
-          <th>Due Date</th>
-          <th>Amount</th>
-          <th>Payment Method</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Netflix</td>
-          <td>July 19, 2025</td>
-          <td>Rp. 65.000</td>
-          <td className="flex items-center gap-3 text-main">Cash</td>
-          <td>
-            <span className="bg-main/20 rounded-lg text-main px-2 py-0.5">
-              Paid
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td>Transportation</td>
-          <td>July 8, 2025</td>
-          <td>Rp. 25.000</td>
-          <td className="flex items-center gap-3 text-blue-500">Transfer</td>
-          <td>
-            <span className="bg-red-500/20 rounded-lg text-red-500 px-2 py-0.5">
-              Failed
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <Table>
+      <TableCaption>A list of your recent subscriptions.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px] font-semibold">
+            Subscription
+          </TableHead>
+          <TableHead className={"font-semibold"}>Due Date</TableHead>
+          <TableHead className={"font-semibold"}>Amount</TableHead>
+          <TableHead className={"font-semibold"}>Payment Method</TableHead>
+          <TableHead className="text-right font-semibold">Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell className="font-medium">Transportation</TableCell>
+          <TableCell>July 8, 2025</TableCell>
+          <TableCell>Rp. 65.000</TableCell>
+          <TableCell>Cash</TableCell>
+          <TableCell className="text-right">
+            <Badge className={"bg-green-500/50"}>Paid</Badge>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">Netflix</TableCell>
+          <TableCell>July 18, 2025</TableCell>
+          <TableCell>Rp. 25.000</TableCell>
+          <TableCell>Transfer</TableCell>
+          <TableCell className="text-right">
+            <Badge className={"bg-red-500/50"}>Failed</Badge>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+      <TableFooter>
+        <TableRow className="font-semibold">
+          <TableCell colSpan={4}>Total</TableCell>
+          <TableCell className="text-right">Rp. 90.000</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
   );
 };
 

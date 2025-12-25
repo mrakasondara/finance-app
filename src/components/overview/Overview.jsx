@@ -30,7 +30,7 @@ const Overview = () => {
   return (
     <>
       <h1 className="text-xl text-black">Overview</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:px-15">
         {itemOverview.map((item, index) => (
           <OverviewCard {...item} key={index++} />
         ))}

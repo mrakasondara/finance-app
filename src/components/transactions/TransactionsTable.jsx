@@ -1,39 +1,52 @@
-import { BiMoney } from "react-icons/bi";
-import { BsBank } from "react-icons/bs";
+import { Banknote, Landmark } from "lucide-react";
+import {
+  Table,
+  TableCaption,
+  TableHeader,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+} from "../ui/table";
 
 const TransactionsTable = () => {
   return (
-    <table className="table table-sm md:table-md">
-      <thead className="bg-main text-white">
-        <tr>
-          <th>Purpose</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Payment Method</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Netflix</td>
-          <td>July 19, 2025</td>
-          <td>Rp. 65.000</td>
-          <td className="flex items-center gap-3 text-main">
-            <BiMoney className="text-xl" />
-            Cash
-          </td>
-        </tr>
-        <tr>
-          <td>Transportation</td>
-          <td>July 8, 2025</td>
-          <td>Rp. 25.000</td>
-          <td className="flex items-center gap-3 text-blue-500">
-            <BsBank className="text-xl" />
-            Transfer
-          </td>
-        </tr>
-        <tr></tr>
-      </tbody>
-    </table>
+    <Table>
+      <TableCaption>A list of your recent transactions</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className={"font-semibold"}>Purpose</TableHead>
+          <TableHead className={"font-semibold"}>Date</TableHead>
+          <TableHead className={"font-semibold"}>Amount</TableHead>
+          <TableHead className={"font-semibold"}>Payment Method</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Netflix</TableCell>
+          <TableCell>July 19, 20205</TableCell>
+          <TableCell>Rp. 65.000</TableCell>
+          <TableCell>
+            <Banknote className={"text-green-500 text-right"} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Transportation</TableCell>
+          <TableCell>July 8, 20205</TableCell>
+          <TableCell>Rp. 25.000</TableCell>
+          <TableCell>
+            <Landmark className={"text-blue-500 text-right"} />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+      <TableFooter>
+        <TableRow className={"font-semibold"}>
+          <TableCell colSpan={3}>Total</TableCell>
+          <TableCell className="text-right">Rp. 90.000</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
   );
 };
 

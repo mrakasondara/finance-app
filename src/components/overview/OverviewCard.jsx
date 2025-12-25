@@ -1,25 +1,22 @@
-import { BiWallet } from "react-icons/bi";
+import { Wallet } from "lucide-react";
+import { Card, CardTitle, CardHeader, CardDescription } from "../ui/card";
 
-const Card = ({ title, value, textColor, bgColor }) => {
+const OverviewCard = ({ title, value, textColor, bgColor }) => {
   return (
-    <div className="flex gap-3 py-4 px-5 items-center shadow-lg hover:shadow-md rounded-md hover:shadow-main transition">
-      <div className="avatar avatar-placeholder">
-        <div className={`${bgColor} text-neutral-content w-8 rounded-lg`}>
-          <span className={`${textColor} text-xl`}>
-            <BiWallet />
-          </span>
+    <Card>
+      <CardHeader>
+        <div className="flex gap-5">
+          <Wallet className={`self-center ${textColor}`} />
+          <div className="flex flex-col">
+            <CardTitle className={"font-normal"}>{title}</CardTitle>
+            <CardDescription className={"font-semibold text-black mt-1"}>
+              Rp. {value}
+            </CardDescription>
+          </div>
         </div>
-      </div>
-
-      <div className="grid text-black">
-        <h4 className="text-gray-500 uppercase">{title}</h4>
-        <p className="text-sm font-semibold opacity-85">
-          <span className="mr-1">Rp.</span>
-          {value}
-        </p>
-      </div>
-    </div>
+      </CardHeader>
+    </Card>
   );
 };
 
-export default Card;
+export default OverviewCard;
