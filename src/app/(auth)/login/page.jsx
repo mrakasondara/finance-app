@@ -1,5 +1,5 @@
-import LoginForm from "@/components/LoginForm";
-import SideImage from "@/components/SideImage";
+import LoginForm from "@/components/auth/LoginForm";
+import SideImage from "@/components/auth/SideImageImage";
 
 export const metadata = {
   title: "Login",

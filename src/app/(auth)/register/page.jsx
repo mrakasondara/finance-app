@@ -1,5 +1,5 @@
-import RegisterForm from "@/components/RegisterForm";
-import SideImage from "@/components/SideImage";
+import RegisterForm from "@/components/auth/RegisterForm";
+import SideImage from "@/components/auth/SideImage";
 
 export const metadata = {
   title: "Register",

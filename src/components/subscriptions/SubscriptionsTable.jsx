@@ -41,7 +41,7 @@ const SubscriptionsTable = () => {
           <TableCell>Rp. 25.000</TableCell>
           <TableCell>Transfer</TableCell>
           <TableCell className="text-right">
-            <Badge className={"bg-red-500/50"}>Failed</Badge>
+            <Badge className={"bg-red-500/50"}>Unpaid</Badge>
           </TableCell>
         </TableRow>
       </TableBody>

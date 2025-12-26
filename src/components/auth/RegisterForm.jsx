@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function RegisterForm() {
   return (

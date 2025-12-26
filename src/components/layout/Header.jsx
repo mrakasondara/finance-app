@@ -11,9 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Avatar } from "./ui/avatar";
+} from "../ui/dropdown-menu";
+import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { SheetMenu } from "./SheetMenu";
 
 export default function Header() {
   const path = usePathname();
@@ -25,7 +26,7 @@ export default function Header() {
     >
       <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
 
-      <div className="flex gap-5 ml-auto items-center">
+      <div className="flex gap-5 ml-auto items-center justify-items-end">
         <DropdownMenu className="mr-3">
           <DropdownMenuTrigger>
             <Avatar className={"h-10 w-auto"}>
@@ -61,7 +62,7 @@ export default function Header() {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Menu />
+        <SheetMenu />
       </div>
     </header>
   );
