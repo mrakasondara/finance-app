@@ -1,11 +1,11 @@
 import {
   BanknoteArrowDown,
   HandCoins,
-  Home,
   Menu,
   Bell,
   User,
   LogOut,
+  ChartPie,
 } from "lucide-react";
 import {
   Sheet,
@@ -31,13 +31,13 @@ export const SheetMenu = () => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetHeader className="absolute">
-        <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
-        <SheetDescription className="sr-only">
-          Sidebar Menu of Vaulto
-        </SheetDescription>
-      </SheetHeader>
-      <SheetContent className="px-4 w-full md:w-[280px]">
+      <SheetContent className="px-4 w-full md:w-[280px] bg-sheets dark:bg-sheets">
+        <SheetHeader className="absolute">
+          <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
+          <SheetDescription className="sr-only">
+            Sidebar Menu of Vaulto
+          </SheetDescription>
+        </SheetHeader>
         <h1 className="text-2xl font-bold text-main dark:text-white mt-4.5">
           Vaulto
         </h1>
@@ -49,8 +49,8 @@ export const SheetMenu = () => {
                   href={"/"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
-                  <Home />
-                  Home
+                  <ChartPie />
+                  Dashboard
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

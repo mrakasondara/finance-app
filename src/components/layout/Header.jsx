@@ -15,6 +15,7 @@ import {
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { SheetMenu } from "./SheetMenu";
+import { ModeToggle } from "../ui/ModeToggle";
 
 export default function Header() {
   const path = usePathname();
@@ -22,18 +23,24 @@ export default function Header() {
 
   return (
     <header
-      className={`${isAuth ? "hidden" : "flex"} items-center gap-3 px-5 py-4`}
+      className={`${
+        isAuth ? "hidden" : "flex"
+      } items-center gap-3 px-5 py-4 z-50`}
     >
       <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
 
       <div className="flex gap-5 ml-auto items-center justify-items-end">
+        <ModeToggle />
         <DropdownMenu className="mr-3">
           <DropdownMenuTrigger>
             <Avatar className={"h-10 w-auto"}>
               <AvatarImage src="profile.png" alt="profile" />
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="start">
+          <DropdownMenuContent
+            className="w-56 bg-table dark:text-white"
+            align="start"
+          >
             <DropdownMenuGroup>
               <DropdownMenuLabel className={"font-semibold"}>
                 My Account
