@@ -16,6 +16,7 @@ import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { SheetMenu } from "./SheetMenu";
 import { ModeToggle } from "../ui/ModeToggle";
+import Link from "next/link";
 
 export default function Header() {
   const path = usePathname();
@@ -45,12 +46,14 @@ export default function Header() {
               <DropdownMenuLabel className={"font-semibold"}>
                 My Account
               </DropdownMenuLabel>
-              <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>
-                  <User />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
+              <Link href={"/profile"}>
+                <DropdownMenuItem>
+                  Profile
+                  <DropdownMenuShortcut>
+                    <User />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 Notifications
                 <DropdownMenuShortcut>

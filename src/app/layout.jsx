@@ -19,9 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${poppins.className} antialiased bg-background bg-table`}
-      >
+      <body className={`${poppins.className} antialiased  bg-table`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
