@@ -2,7 +2,7 @@ import { SubscriptionsDialog } from "@/components/subscriptions/SubscriptionsDia
 import SubscriptionsTable from "@/components/subscriptions/SubscriptionsTable";
 
 export const metadata = {
-  title: "Subscriptions",
+  title: "Subscriptions Dashboard",
 };
 
 export default function Subscriptions() {

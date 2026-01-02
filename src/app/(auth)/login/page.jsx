@@ -1,11 +1,17 @@
+import { getServerSession } from "next-auth";
 import LoginForm from "@/components/auth/LoginForm";
 import SideImage from "@/components/auth/SideImage";
+import { RedirectType, redirect } from "next/navigation";
 
 export const metadata = {
   title: "Login",
 };
 
-export default function Login() {
+export default async function Login() {
+  const user = await getServerSession();
+  if (user) {
+    redirect("/", RedirectType.replace);
+  }
   return (
     <div className="flex h-screen text-black bg-white">
       <SideImage />

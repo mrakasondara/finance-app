@@ -22,6 +22,7 @@ import {
   NavigationMenuLink,
 } from "../ui/navigation-menu";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export const SheetMenu = () => {
   return (
@@ -57,7 +58,7 @@ export const SheetMenu = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={"/subscriptions"}
+                  href={"/dashboard/subscriptions"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
                   <BanknoteArrowDown />
@@ -68,7 +69,7 @@ export const SheetMenu = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={"/transactions"}
+                  href={"/dashboard/transactions"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
                   <HandCoins />
@@ -79,7 +80,7 @@ export const SheetMenu = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={"/notifications"}
+                  href={"/dashboard/notifications"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
                   <Bell />
@@ -90,7 +91,7 @@ export const SheetMenu = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={"/profile"}
+                  href={"/dashboard/profile"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
                   <User />
@@ -103,7 +104,7 @@ export const SheetMenu = () => {
                 asChild
                 className="text-[17px] flex-row items-center gap-2 bg-none hover:bg-red-500 hover:text-white cursor-pointer transition"
               >
-                <button>
+                <button onClick={() => signOut()}>
                   <LogOut className="hover:text-white" />
                   Logout
                 </button>

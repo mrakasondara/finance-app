@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Bell, LogOut, Menu, User } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Bell, LogOut, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,10 +17,12 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import { SheetMenu } from "./SheetMenu";
 import { ModeToggle } from "../ui/ModeToggle";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function Header() {
   const path = usePathname();
   const isAuth = path?.startsWith("/login") || path?.startsWith("/register");
+  const router = useRouter();
 
   return (
     <header
@@ -46,7 +48,7 @@ export default function Header() {
               <DropdownMenuLabel className={"font-semibold"}>
                 My Account
               </DropdownMenuLabel>
-              <Link href={"/profile"}>
+              <Link href={"/dashboard/profile"}>
                 <DropdownMenuItem>
                   Profile
                   <DropdownMenuShortcut>
@@ -63,7 +65,7 @@ export default function Header() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => signOut()}>
                 Logout
                 <DropdownMenuShortcut>
                   <LogOut />

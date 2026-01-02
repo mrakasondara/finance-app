@@ -2,7 +2,7 @@ import { TransactionsDialog } from "@/components/transactions/TransactionDialog"
 import TransactionsTable from "@/components/transactions/TransactionsTable";
 
 export const metadata = {
-  title: "Transactions",
+  title: "Transactions Dashboard",
 };
 
 export default function Transactions() {
