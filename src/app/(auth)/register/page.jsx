@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function Register() {
-  const { user } = await getServerSession();
+  const user = await getServerSession();
   if (user) {
     redirect("/", RedirectType.replace);
   }
