@@ -48,7 +48,6 @@ export const PersonalInformation = ({ initialData, fetchProfile }) => {
     };
     setIsLoading(true);
     const response = await FinanceAPI.updatePersonalProfile(newProfile);
-    console.log(response);
     setIsLoading(false);
     if (response.success) {
       toast.success(response.message);
