@@ -20,6 +20,9 @@ const userSchema = new Schema(
     short_name: {
       type: String,
     },
+    gender: {
+      type: String,
+    },
     last_name: {
       type: String,
     },
@@ -27,7 +30,7 @@ const userSchema = new Schema(
       type: String,
     },
     phone: {
-      type: String,
+      type: Number,
     },
     address: {
       type: String,
