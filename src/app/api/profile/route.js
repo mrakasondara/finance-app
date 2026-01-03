@@ -23,7 +23,7 @@ export async function GET(req) {
     );
     return NextResponse.json(
       {
-        success: false,
+        success: true,
         message: "Profile successfully fetched",
         data: userData,
       },

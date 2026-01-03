@@ -20,7 +20,7 @@ import { Spinner } from "../ui/spinner";
 
 export const ShortProfile = ({ initialData, fetchProfile }) => {
   const [userData, setUserData] = useState({
-    short_name: "",
+    first_name: "",
     last_name: "",
     bio: "",
     address: "",
@@ -31,7 +31,7 @@ export const ShortProfile = ({ initialData, fetchProfile }) => {
   useEffect(() => {
     if (initialData) {
       setUserData({
-        short_name: initialData?.short_name ?? "",
+        first_name: initialData?.first_name ?? "",
         last_name: initialData?.last_name ?? "",
         bio: initialData?.bio ?? "",
         address: initialData?.address ?? "",
@@ -44,7 +44,7 @@ export const ShortProfile = ({ initialData, fetchProfile }) => {
     setIsLoading(true);
 
     const newProfile = {
-      short_name: userData.short_name,
+      first_name: userData.first_name,
       last_name: userData.last_name,
       bio: userData.bio,
       address: userData.address,
@@ -68,8 +68,8 @@ export const ShortProfile = ({ initialData, fetchProfile }) => {
       </Avatar>
       <div className="flex flex-col justify-center gap-2">
         <h3 className="text-lg font-semibold">
-          {initialData?.short_name ? initialData.short_name : "-"}{" "}
-          {initialData?.last_name ? initialData.last_name : ""}
+          {initialData?.first_name ? initialData.first_name : "-"}{" "}
+          {initialData?.last_name ?? ""}
         </h3>
         <div className="flex flex-col text-slate-600 dark:text-slate-100/70 text-sm gap-1">
           <p>{initialData?.bio ? initialData.bio : "Add your bio"}</p>
@@ -105,9 +105,9 @@ export const ShortProfile = ({ initialData, fetchProfile }) => {
                   <label htmlFor="first-name">First Name</label>
                   <Input
                     onChange={(e) =>
-                      setUserData({ ...userData, short_name: e.target.value })
+                      setUserData({ ...userData, first_name: e.target.value })
                     }
-                    value={userData.short_name}
+                    value={userData.first_name}
                     id="first-name"
                     name="first-name"
                   />

@@ -16,11 +16,11 @@ export async function GET(req) {
   try {
     await connectDB(mongoURI);
     const userData = await User.findOne({ email: email }).select(
-      "email short_name last_name bio address"
+      "email first_name last_name bio address"
     );
     return NextResponse.json(
       {
-        success: false,
+        success: true,
         message: "Short Profile successfully fetched",
         data: userData,
       },
@@ -46,13 +46,13 @@ export async function PUT(req) {
   try {
     await connectDB(mongoURI);
     const newData = await req.json();
-    const { short_name, last_name, bio, address } = newData;
+    const { first_name, last_name, bio, address } = newData;
 
     const userData = await User.findOne({ email: email }).select(
-      "email short_name last_name bio address"
+      "email first_name last_name bio address"
     );
 
-    userData.short_name = short_name;
+    userData.first_name = first_name;
     userData.last_name = last_name;
     userData.bio = bio;
     userData.address = address;

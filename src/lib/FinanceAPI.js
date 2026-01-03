@@ -35,6 +35,18 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async updatePersonalProfile(newData) {
+    try {
+      const response = await fetch(`${baseAPI}/profile/personal-profile`, {
+        method: "PUT",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static getSubcriptions() {}
   static getTransactions() {}
 }

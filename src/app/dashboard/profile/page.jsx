@@ -25,7 +25,10 @@ export default function Profile() {
     <div className="lg:w-1/2 py-5 px-[3rem] flex flex-col gap-5">
       <h1 className="text-xl font-semibold">My Profiles</h1>
       <ShortProfile initialData={initialData} fetchProfile={fetchProfile} />
-      <PersonalInformation />
+      <PersonalInformation
+        initialData={initialData}
+        fetchProfile={fetchProfile}
+      />
       <ResetPassword />
     </div>
   );
