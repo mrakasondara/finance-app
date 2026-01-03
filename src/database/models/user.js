@@ -17,7 +17,7 @@ const userSchema = new Schema(
         message: "Email should not empty",
       },
     },
-    short_name: {
+    first_name: {
       type: String,
     },
     gender: {
@@ -30,7 +30,7 @@ const userSchema = new Schema(
       type: String,
     },
     phone: {
-      type: Number,
+      type: String,
     },
     address: {
       type: String,
