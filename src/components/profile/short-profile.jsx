@@ -18,41 +18,38 @@ import {
 import FinanceAPI from "@/lib/FinanceAPI";
 import { Spinner } from "../ui/spinner";
 
-export const ShortProfile = () => {
-  const [profile, setProfile] = useState(null);
-  const [shortName, setShortName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [bio, setBio] = useState("");
-  const [address, setAddress] = useState("");
+export const ShortProfile = ({ initialData, fetchProfile }) => {
+  const [userData, setUserData] = useState({
+    short_name: "",
+    last_name: "",
+    bio: "",
+    address: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const fetchProfile = async () => {
-    try {
-      const { data } = await FinanceAPI.getProfile();
-      setProfile(data);
-      setShortName(data?.short_name ?? "");
-      setLastName(data?.last_name ?? "");
-      setBio(data?.bio ?? "");
-      setAddress(data?.address ?? "");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    if (initialData) {
+      setUserData({
+        short_name: initialData?.short_name ?? "",
+        last_name: initialData?.last_name ?? "",
+        bio: initialData?.bio ?? "",
+        address: initialData?.address ?? "",
+      });
+    }
+  }, [initialData]);
 
   const updateShortProfile = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     const newProfile = {
-      short_name: shortName,
-      last_name: lastName,
-      bio,
-      address,
+      short_name: userData.short_name,
+      last_name: userData.last_name,
+      bio: userData.bio,
+      address: userData.address,
     };
+
     const response = await FinanceAPI.updateShortProfile(newProfile);
     setIsLoading(false);
     if (response.success) {
@@ -71,12 +68,14 @@ export const ShortProfile = () => {
       </Avatar>
       <div className="flex flex-col justify-center gap-2">
         <h3 className="text-lg font-semibold">
-          {profile?.short_name ? profile.short_name : "-"}{" "}
-          {profile?.last_name ? profile.last_name : ""}
+          {initialData?.short_name ? initialData.short_name : "-"}{" "}
+          {initialData?.last_name ? initialData.last_name : ""}
         </h3>
         <div className="flex flex-col text-slate-600 dark:text-slate-100/70 text-sm gap-1">
-          <p>{profile?.bio ? profile.bio : "Add your bio"}</p>
-          <p>{profile?.address ? profile.address : "Add your address"}</p>
+          <p>{initialData?.bio ? initialData.bio : "Add your bio"}</p>
+          <p>
+            {initialData?.address ? initialData.address : "Add your address"}
+          </p>
         </div>
       </div>
 
@@ -105,8 +104,10 @@ export const ShortProfile = () => {
                 <div className="grid w-1/2 gap-3">
                   <label htmlFor="first-name">First Name</label>
                   <Input
-                    onChange={(e) => setShortName(e.target.value)}
-                    value={shortName}
+                    onChange={(e) =>
+                      setUserData({ ...userData, short_name: e.target.value })
+                    }
+                    value={userData.short_name}
                     id="first-name"
                     name="first-name"
                   />
@@ -114,8 +115,10 @@ export const ShortProfile = () => {
                 <div className="grid w-1/2 gap-3">
                   <label htmlFor="last-name">Last Name</label>
                   <Input
-                    onChange={(e) => setLastName(e.target.value)}
-                    value={lastName}
+                    onChange={(e) =>
+                      setUserData({ ...userData, last_name: e.target.value })
+                    }
+                    value={userData.last_name}
                     id="last-name"
                     name="last-name"
                   />
@@ -124,8 +127,10 @@ export const ShortProfile = () => {
               <div className="grid gap-3">
                 <label htmlFor="bio">Your bio</label>
                 <Input
-                  onChange={(e) => setBio(e.target.value)}
-                  value={bio}
+                  onChange={(e) =>
+                    setUserData({ ...userData, bio: e.target.value })
+                  }
+                  value={userData.bio}
                   id="bio"
                   name="bio"
                 />
@@ -133,8 +138,10 @@ export const ShortProfile = () => {
               <div className="grid gap-3">
                 <label htmlFor="adress">Your adress</label>
                 <Input
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address}
+                  onChange={(e) =>
+                    setUserData({ ...userData, address: e.target.value })
+                  }
+                  value={userData.address}
                   id="adress"
                   name="adress"
                 />
