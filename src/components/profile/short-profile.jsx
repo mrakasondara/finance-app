@@ -67,7 +67,7 @@ export const ShortProfile = () => {
   return (
     <div className="flex border dark:border-[#3b3a3aaf] gap-4 rounded-lg p-3 relative">
       <Avatar className={"h-30 w-auto"}>
-        <AvatarImage src="profile.png" alt="profile" />
+        <AvatarImage src="/profile/profile.png" alt="profile" />
       </Avatar>
       <div className="flex flex-col justify-center gap-2">
         <h3 className="text-lg font-semibold">
