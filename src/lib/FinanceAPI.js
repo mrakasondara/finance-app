@@ -47,6 +47,18 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async resetPassword(newData) {
+    try {
+      const response = await fetch(`${baseAPI}/profile/reset-password`, {
+        method: "PUT",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static getSubcriptions() {}
   static getTransactions() {}
 }

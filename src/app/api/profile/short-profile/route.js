@@ -15,7 +15,7 @@ export async function GET(req) {
   const { email } = token;
   try {
     await connectDB(mongoURI);
-    const userData = await User.findOne({ email: email }).select(
+    const userData = await User.findOne({ email }).select(
       "email first_name last_name bio address"
     );
     return NextResponse.json(
@@ -48,7 +48,7 @@ export async function PUT(req) {
     const newData = await req.json();
     const { first_name, last_name, bio, address } = newData;
 
-    const userData = await User.findOne({ email: email }).select(
+    const userData = await User.findOne({ email }).select(
       "email first_name last_name bio address"
     );
 

@@ -15,9 +15,7 @@ export async function GET(req) {
   const { email } = token;
   try {
     await connectDB(mongoURI);
-    const userData = await User.findOne({ email: email }).select(
-      "-password -__v"
-    );
+    const userData = await User.findOne({ email }).select("-password -__v");
     return NextResponse.json(
       {
         success: true,
@@ -46,9 +44,7 @@ export async function PUT(req) {
   const data = await req.json();
   try {
     await connectDB(mongoURI);
-    const userData = await User.findOne({ email: email }).select(
-      "-password -__v"
-    );
+    const userData = await User.findOne({ email }).select("-password -__v");
 
     userData.first_name = data.first_name;
     userData.last_name = data.last_name;
