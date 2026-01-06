@@ -1,10 +1,5 @@
-import {
-  Banknote,
-  BanknoteArrowDown,
-  BanknoteArrowUp,
-  Landmark,
-  Plus,
-} from "lucide-react";
+"use client";
+import { Banknote, Landmark, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -27,39 +22,87 @@ import {
   SelectValue,
 } from "../ui/select";
 import { transactionCategories } from "@/lib/transaction-categories";
+import { useState } from "react";
+import FinanceAPI from "@/lib/FinanceAPI";
+import { Spinner } from "../ui/spinner";
+import { toast } from "sonner";
 
 export const SubscriptionsDialog = () => {
+  const [data, setData] = useState({
+    subscription: "",
+    due_date: "",
+    amount: 0,
+  });
+  const [category, setCategory] = useState("income-salary");
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [status, setStatus] = useState("paid");
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const addSubscription = async (e) => {
+    e.preventDefault();
+    const subscriptionData = {
+      ...data,
+      category,
+      payment_method: paymentMethod,
+      status,
+    };
+    setIsLoading(true);
+    const { success, message } = await FinanceAPI.addSubscription(
+      subscriptionData
+    );
+    setIsLoading(false);
+    if (success) {
+      toast.success(message);
+      setOpen(false);
+    } else {
+      toast.error(message);
+    }
+  };
+
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            className="bg-main text-white cursor-pointer"
-          >
-            <Plus />
-            Create Subscriptions
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>New Subscriptions</DialogTitle>
-            <DialogDescription>
-              Add new subscriptions here. Click save when you&apos;re done.
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="bg-main text-white cursor-pointer">
+          <Plus />
+          Create Subscription
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>New Subscription</DialogTitle>
+          <DialogDescription>
+            Add new subscription here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={addSubscription}>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <label htmlFor="subscriptions">Subscriptions</label>
+              <label htmlFor="subscription">Subscription</label>
               <Input
-                id="subscriptions"
-                name="subscriptions"
-                defaultValue="Netflix"
+                id="subscription"
+                name="subscription"
+                placeholder="Netflix"
+                value={data.subscription}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="grid gap-3">
               <label htmlFor="category">Category</label>
-              <Select>
+              <Select
+                defaultValue={category}
+                onValueChange={setCategory}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
@@ -69,10 +112,7 @@ export const SubscriptionsDialog = () => {
                     {transactionCategories.map((transaction) => {
                       const Icon = transaction.icon;
                       return (
-                        <SelectItem
-                          value={transaction.name}
-                          key={transaction.name}
-                        >
+                        <SelectItem value={transaction.id} key={transaction.id}>
                           <Icon /> {transaction.name}
                         </SelectItem>
                       );
@@ -82,8 +122,15 @@ export const SubscriptionsDialog = () => {
               </Select>
             </div>
             <div className="grid gap-3">
-              <label htmlFor="date">Date</label>
-              <Input id="date" name="date" type="date" />
+              <label htmlFor="due_date">Due Date</label>
+              <Input
+                id="due_date"
+                name="due_date"
+                type="date"
+                value={data.due_date}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="grid gap-3">
               <label htmlFor="amount">Amount</label>
@@ -92,11 +139,18 @@ export const SubscriptionsDialog = () => {
                 name="amount"
                 type="number"
                 placeholder="150000"
+                value={data.amount}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="grid gap-3">
               <label htmlFor="payment">Payment Method</label>
-              <Select>
+              <Select
+                defaultValue={paymentMethod}
+                onValueChange={setPaymentMethod}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Payment Method" />
                 </SelectTrigger>
@@ -115,7 +169,7 @@ export const SubscriptionsDialog = () => {
             </div>
             <div className="grid gap-3">
               <label htmlFor="status">Status</label>
-              <Select>
+              <Select defaultValue={status} onValueChange={setStatus} required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Status" />
                 </SelectTrigger>
@@ -129,14 +183,17 @@ export const SubscriptionsDialog = () => {
               </Select>
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-2">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Add Subscriptions</Button>
+            <Button type="submit">
+              {isLoading ? <Spinner /> : ""}
+              Save
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

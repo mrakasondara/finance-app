@@ -18,9 +18,7 @@ export async function GET(req) {
   const { email } = token;
   try {
     await connectDB(mongoURI);
-    const userData = await User.findOne({ email: email }).select(
-      "-password -__v"
-    );
+    const userData = await User.findOne({ email }).select("-password -__v");
     return NextResponse.json(
       {
         success: true,

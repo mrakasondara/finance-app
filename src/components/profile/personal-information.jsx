@@ -47,14 +47,16 @@ export const PersonalInformation = ({ initialData, fetchProfile }) => {
       phone: String(userData.phone),
     };
     setIsLoading(true);
-    const response = await FinanceAPI.updatePersonalProfile(newProfile);
+    const { success, message } = await FinanceAPI.updatePersonalProfile(
+      newProfile
+    );
     setIsLoading(false);
-    if (response.success) {
-      toast.success(response.message);
+    if (success) {
+      toast.success(message);
       setOpen(false);
       fetchProfile();
     } else {
-      toast.error(response.message);
+      toast.error(message);
     }
   };
 

@@ -59,7 +59,27 @@ class FinanceAPI {
       console.error(error);
     }
   }
-  static getSubcriptions() {}
+  static async addSubscription(newData) {
+    try {
+      const response = await fetch(`${baseAPI}/subscriptions`, {
+        method: "POST",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  static async getSubcriptions() {
+    try {
+      const response = await fetch(`${baseAPI}/subscriptions`);
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static getTransactions() {}
 }
 

@@ -85,7 +85,7 @@ export const ResetPassword = () => {
           <Button
             type="submit"
             variant="outline"
-            className="bg-main text-white"
+            className="bg-main text-white cursor-pointer"
           >
             {isLoading ? <Spinner /> : ""}
             Change Password
