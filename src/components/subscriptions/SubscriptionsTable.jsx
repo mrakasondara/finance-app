@@ -15,6 +15,10 @@ import {
 } from "../ui/table";
 import FinanceAPI from "@/lib/FinanceAPI";
 import { Spinner } from "../ui/spinner";
+import { SubscriptionsDialog } from "./SubscriptionsDialog";
+import { LoadingSpinner } from "../loading-spinner";
+import { Banknote, Landmark } from "lucide-react";
+import { transactionCategories } from "@/lib/transaction-categories";
 
 const SubscriptionsTable = () => {
   const path = usePathname();
@@ -42,11 +46,13 @@ const SubscriptionsTable = () => {
 
   return (
     <>
+      {isOverview ? "" : <SubscriptionsDialog fetchData={fetchSubscriptions} />}
+
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {isOverview ? (
           <TableCaption>
             A list of your recent subscriptions.{" "}
-            <Link href={"/subscriptions"} className="underline">
+            <Link href={"/dashboard/subscriptions"} className="underline">
               See your all subscriptions
             </Link>
           </TableCaption>
@@ -58,7 +64,12 @@ const SubscriptionsTable = () => {
 
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px] text-black dark:text-white font-semibold">
+            <TableHead
+              className={"w-[100px] text-black dark:text-white font-semibold"}
+            >
+              Category
+            </TableHead>
+            <TableHead className=" text-black dark:text-white font-semibold">
               Subscription
             </TableHead>
             <TableHead className={"text-black dark:text-white font-semibold"}>
@@ -79,12 +90,25 @@ const SubscriptionsTable = () => {
           {subscriptions?.data.map((subscription, index) => {
             return (
               <TableRow className="text-black dark:text-white" key={index++}>
+                <TableCell>
+                  {transactionCategories.map((transaction) => {
+                    const Icon = transaction.icon;
+                    if (transaction.id == subscription.category) {
+                      return <Icon key={subscription._id} />;
+                    }
+                  })}
+                </TableCell>
                 <TableCell>{subscription.subscription}</TableCell>
                 <TableCell>
                   {new Date(subscription.due_date).toLocaleDateString()}
                 </TableCell>
                 <TableCell>{subscription.amount}</TableCell>
-                <TableCell className="capitalize">
+                <TableCell className="capitalize flex gap-1 items-center">
+                  {subscription.payment_method == "bank" ? (
+                    <Landmark className={"text-blue-500 text-right"} />
+                  ) : (
+                    <Banknote className={"text-green-500 text-right"} />
+                  )}
                   {subscription.payment_method}
                 </TableCell>
                 <TableCell className="text-right">
@@ -93,7 +117,7 @@ const SubscriptionsTable = () => {
                       subscription.status == "paid"
                         ? "bg-green-500/50"
                         : "bg-red-500/50"
-                    } text-black dark:text-white`}
+                    } text-white`}
                   >
                     {subscription.status}
                   </Badge>
@@ -104,15 +128,14 @@ const SubscriptionsTable = () => {
         </TableBody>
         <TableFooter>
           <TableRow className="font-semibold text-black dark:text-white">
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={5}>Total</TableCell>
             <TableCell className="text-right">Rp. {totalAmount}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
-      <Spinner
-        className={`size-12 mt-[12rem] mx-auto ${
-          isLoading ? "block" : "hidden"
-        }`}
+      <LoadingSpinner
+        isLoading={isLoading}
+        message={"Fetching Subscriptions...."}
       />
     </>
   );

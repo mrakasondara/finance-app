@@ -27,7 +27,7 @@ import FinanceAPI from "@/lib/FinanceAPI";
 import { Spinner } from "../ui/spinner";
 import { toast } from "sonner";
 
-export const SubscriptionsDialog = () => {
+export const SubscriptionsDialog = ({ fetchData }) => {
   const [data, setData] = useState({
     subscription: "",
     due_date: "",
@@ -63,6 +63,7 @@ export const SubscriptionsDialog = () => {
     if (success) {
       toast.success(message);
       setOpen(false);
+      await fetchData();
     } else {
       toast.error(message);
     }
@@ -71,7 +72,10 @@ export const SubscriptionsDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-main text-white cursor-pointer">
+        <Button
+          variant="outline"
+          className="bg-main text-white cursor-pointer absolute top-4 right-5"
+        >
           <Plus />
           Create Subscription
         </Button>
