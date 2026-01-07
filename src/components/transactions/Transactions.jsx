@@ -4,7 +4,7 @@ import { BanknoteArrowDown, Calendar } from "lucide-react";
 
 const Transactions = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-5">
+    <div className="flex flex-col md:flex-row gap-5 ">
       <div className="order-2 md:order-1 flex w-full md:w-[60%] lg:w-[70%] bg-white dark:bg-table">
         <TransactionsTable />
       </div>

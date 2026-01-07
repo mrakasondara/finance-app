@@ -59,7 +59,7 @@ export const AlertDeleteDialog = ({ id, fetchData, setOpenDropdown }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form onSubmit={deleteSubscription}>
-            <AlertDialogAction type="submit">
+            <AlertDialogAction type="submit" className="cursor-pointer">
               {isLoading ? <Spinner /> : ""}
               Continue
             </AlertDialogAction>

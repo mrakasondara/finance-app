@@ -195,7 +195,7 @@ export function SubscriptionsEditDialog({ data, fetchData }) {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">
+            <Button type="submit" className="cursor-pointer">
               {isLoading ? <Spinner /> : ""}
               Save
             </Button>

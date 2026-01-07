@@ -18,6 +18,7 @@ import { SheetMenu } from "./SheetMenu";
 import { ModeToggle } from "../ui/ModeToggle";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function Header() {
   const path = usePathname();
@@ -56,7 +57,7 @@ export default function Header() {
                   </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast.info("coming soon!")}>
                 Notifications
                 <DropdownMenuShortcut>
                   <Bell />

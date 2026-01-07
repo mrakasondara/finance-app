@@ -52,16 +52,10 @@ export async function POST(req) {
     await connectDB(mongoURI);
     const { _id } = await User.findOne({ email }).select("_id");
 
-    const { subscription, category, due_date, amount, payment_method, status } =
-      await req.json();
+    const data = await req.json();
 
     const newSubscription = new Subscription({
-      subscription,
-      category,
-      due_date,
-      amount,
-      payment_method,
-      status,
+      ...data,
       user_id: _id,
     });
 

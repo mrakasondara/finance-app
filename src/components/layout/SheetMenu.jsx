@@ -23,6 +23,7 @@ import {
 } from "../ui/navigation-menu";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 export const SheetMenu = () => {
   return (
@@ -77,15 +78,12 @@ export const SheetMenu = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem onClick={() => toast.info("coming soon!")}>
               <NavigationMenuLink asChild>
-                <Link
-                  href={"/dashboard/notifications"}
-                  className="text-[17px] flex-row items-center gap-2"
-                >
+                <div className="text-[17px] flex-row items-center gap-2 cursor-pointer">
                   <Bell />
                   Notifications
-                </Link>
+                </div>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>

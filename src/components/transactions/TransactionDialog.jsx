@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Banknote,
   BanknoteArrowDown,
@@ -27,35 +28,92 @@ import {
   SelectValue,
 } from "../ui/select";
 import { transactionCategories } from "@/lib/transaction-categories";
+import { Spinner } from "../ui/spinner";
+import FinanceAPI from "@/lib/FinanceAPI";
+import { toast } from "sonner";
 
-export const TransactionsDialog = () => {
+export const TransactionsDialog = ({ fetchData }) => {
+  const [data, setData] = useState({
+    purpose: "",
+    date: "",
+    amount: "",
+  });
+
+  const [open, setOpen] = useState(false);
+  const [transactionType, setTransactionType] = useState("income");
+  const [category, setCategory] = useState("income-bonus");
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const addTransaction = async (e) => {
+    e.preventDefault();
+    const transactionData = {
+      ...data,
+      transaction_type: transactionType,
+      category,
+      payment_method: paymentMethod,
+    };
+
+    setIsLoading(true);
+    const { success, message } = await FinanceAPI.addTransactions(
+      transactionData
+    );
+    setIsLoading(false);
+
+    if (success) {
+      toast.success(message);
+      setOpen(false);
+      fetchData();
+    } else {
+      toast.error(message);
+    }
+  };
+
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            className="bg-main text-white cursor-pointer"
-          >
-            <Plus />
-            Create Transactions
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>New Transactions</DialogTitle>
-            <DialogDescription>
-              Add new transactions here. Click save when you&apos;re done.
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="bg-main text-white cursor-pointer absolute top-4 right-5"
+        >
+          <Plus />
+          Create Transactions
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>New Transactions</DialogTitle>
+          <DialogDescription>
+            Add new transactions here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={addTransaction}>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <label htmlFor="purpose">Purpose</label>
-              <Input id="purpose" name="purpose" defaultValue="Health" />
+              <Input
+                id="purpose"
+                name="purpose"
+                value={data.purpose}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="grid gap-3">
               <label htmlFor="transaction-type">Transaction Type</label>
-              <Select>
+              <Select
+                defaultValue={transactionType}
+                onValueChange={setTransactionType}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Transaction Type" />
                 </SelectTrigger>
@@ -74,7 +132,11 @@ export const TransactionsDialog = () => {
             </div>
             <div className="grid gap-3">
               <label htmlFor="category">Category</label>
-              <Select>
+              <Select
+                defaultValue={category}
+                onValueChange={setCategory}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
@@ -85,7 +147,7 @@ export const TransactionsDialog = () => {
                       const Icon = transaction.icon;
                       return (
                         <SelectItem
-                          value={transaction.name}
+                          value={transaction.id}
                           key={transaction.name}
                         >
                           <Icon /> {transaction.name}
@@ -98,7 +160,14 @@ export const TransactionsDialog = () => {
             </div>
             <div className="grid gap-3">
               <label htmlFor="date">Date</label>
-              <Input id="date" name="date" type="date" />
+              <Input
+                id="date"
+                name="date"
+                type="date"
+                value={data.date}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="grid gap-3">
               <label htmlFor="amount">Amount</label>
@@ -107,11 +176,17 @@ export const TransactionsDialog = () => {
                 name="amount"
                 type="number"
                 placeholder="150000"
+                value={data.amount}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="grid gap-3">
               <label htmlFor="payment">Payment Method</label>
-              <Select>
+              <Select
+                defaultValue={paymentMethod}
+                onValueChange={setPaymentMethod}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Payment Method" />
                 </SelectTrigger>
@@ -129,14 +204,19 @@ export const TransactionsDialog = () => {
               </Select>
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-3">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" className="cursor-pointer">
+                Cancel
+              </Button>
             </DialogClose>
-            <Button type="submit">Add Transactions</Button>
+            <Button type="submit" className="cursor-pointer">
+              {isLoading ? <Spinner /> : ""}
+              Add Transactions
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

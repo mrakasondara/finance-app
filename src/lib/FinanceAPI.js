@@ -103,7 +103,27 @@ class FinanceAPI {
       console.error(error);
     }
   }
-  static getTransactions() {}
+  static async getTransactions() {
+    try {
+      const response = await fetch(`${baseAPI}/transactions`);
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  static async addTransactions(newData) {
+    try {
+      const response = await fetch(`${baseAPI}/transactions`, {
+        method: "POST",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default FinanceAPI;
