@@ -81,12 +81,20 @@ const SubscriptionsTable = () => {
             <TableHead className={"text-black dark:text-white font-semibold"}>
               Payment Method
             </TableHead>
-            <TableHead className=" text-black dark:text-white font-semibold">
+            <TableHead
+              className={`text-black dark:text-white font-semibold ${
+                isOverview ? "text-right" : "text-left"
+              }`}
+            >
               Status
             </TableHead>
-            <TableHead className="text-right text-black dark:text-white font-semibold">
-              Actions
-            </TableHead>
+            {isOverview ? (
+              ""
+            ) : (
+              <TableHead className="text-right text-black dark:text-white font-semibold">
+                Actions
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -114,7 +122,9 @@ const SubscriptionsTable = () => {
                   )}
                   {subscription.payment_method}
                 </TableCell>
-                <TableCell>
+                <TableCell
+                  className={`${isOverview ? "text-right" : "text-left"}`}
+                >
                   <Badge
                     className={`capitalize ${
                       subscription.status == "paid"
@@ -125,19 +135,23 @@ const SubscriptionsTable = () => {
                     {subscription.status}
                   </Badge>
                 </TableCell>
-                <TableCell className={"text-right"}>
-                  <DropdownActions
-                    data={subscription}
-                    fetchData={fetchSubscriptions}
-                  />
-                </TableCell>
+                {isOverview ? (
+                  ""
+                ) : (
+                  <TableCell className={"text-right"}>
+                    <DropdownActions
+                      data={subscription}
+                      fetchData={fetchSubscriptions}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
         </TableBody>
         <TableFooter>
           <TableRow className="font-semibold text-black dark:text-white">
-            <TableCell colSpan={6}>Total</TableCell>
+            <TableCell colSpan={isOverview ? 5 : 6}>Total</TableCell>
             <TableCell className="text-right">Rp. {totalAmount}</TableCell>
           </TableRow>
         </TableFooter>

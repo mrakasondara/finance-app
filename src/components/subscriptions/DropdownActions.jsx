@@ -1,19 +1,20 @@
-import { EllipsisVertical, Trash } from "lucide-react";
+import { useState } from "react";
+import { EllipsisVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SubscriptionsEditDialog } from "./SubscriptionsEditDialog";
 import { AlertDeleteDialog } from "./AlertDeleteDialog";
+
 export const DropdownActions = ({ data, fetchData }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
           <EllipsisVertical />
@@ -23,7 +24,11 @@ export const DropdownActions = ({ data, fetchData }) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <SubscriptionsEditDialog data={data} fetchData={fetchData} />
-          <AlertDeleteDialog id={data?._id} fetchData={fetchData} />
+          <AlertDeleteDialog
+            id={data?._id}
+            fetchData={fetchData}
+            setOpenDropdown={setOpen}
+          />
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -16,25 +16,30 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 
-export const AlertDeleteDialog = ({ id, fetchData }) => {
+export const AlertDeleteDialog = ({ id, fetchData, setOpenDropdown }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const deleteSubscription = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
+    setOpen(true);
     const { success, message } = await FinanceAPI.deleteSubscription(id);
     setIsLoading(false);
+    setOpen(false);
 
     if (success) {
       toast.success(message);
       fetchData();
+      setOpenDropdown(false);
     } else {
       toast.error(message);
     }
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           Delete
@@ -55,7 +60,8 @@ export const AlertDeleteDialog = ({ id, fetchData }) => {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form onSubmit={deleteSubscription}>
             <AlertDialogAction type="submit">
-              {isLoading ? <Spinner /> : "Continue"}
+              {isLoading ? <Spinner /> : ""}
+              Continue
             </AlertDialogAction>
           </form>
         </AlertDialogFooter>
