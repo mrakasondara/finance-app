@@ -1,62 +1,66 @@
-"use client";
-import { Banknote, Landmark, Plus } from "lucide-react";
-import { Button } from "../ui/button";
+import { useState } from "react";
+import { Banknote, Landmark, SquarePen } from "lucide-react";
 import {
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
-} from "../ui/dialog";
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DropdownMenuItem, DropdownMenuShortcut } from "../ui/dropdown-menu";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { transactionCategories } from "@/lib/transaction-categories";
 import {
   Select,
+  SelectTrigger,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectLabel,
-  SelectTrigger,
   SelectValue,
+  SelectItem,
 } from "../ui/select";
-import { transactionCategories } from "@/lib/transaction-categories";
-import { useState } from "react";
-import FinanceAPI from "@/lib/FinanceAPI";
 import { Spinner } from "../ui/spinner";
+import FinanceAPI from "@/lib/FinanceAPI";
 import { toast } from "sonner";
 
-export const SubscriptionsDialog = ({ fetchData }) => {
-  const [data, setData] = useState({
-    subscription: "",
-    due_date: "",
-    amount: 0,
+export function SubscriptionsEditDialog({ data, fetchData }) {
+  const [newData, setNewData] = useState({
+    subscription: data?.subscription ?? "",
+    due_date: data?.due_date ?? "",
+    amount: data?.amount ?? "",
   });
-  const [category, setCategory] = useState("income-salary");
-  const [paymentMethod, setPaymentMethod] = useState("cash");
-  const [status, setStatus] = useState("paid");
+  const [category, setCategory] = useState(data?.category ?? "");
+  const [paymentMethod, setPaymentMethod] = useState(
+    data?.payment_method ?? ""
+  );
+  const [status, setStatus] = useState(data?.status ?? "");
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => ({
+    setNewData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const addSubscription = async (e) => {
+  const editSubscription = async (e) => {
     e.preventDefault();
     const subscriptionData = {
-      ...data,
+      ...newData,
       category,
       payment_method: paymentMethod,
       status,
+      _id: data._id,
     };
+
     setIsLoading(true);
-    const { success, message } = await FinanceAPI.addSubscription(
+    const { success, message } = await FinanceAPI.updateSubscription(
       subscriptionData
     );
     setIsLoading(false);
@@ -72,22 +76,22 @@ export const SubscriptionsDialog = ({ fetchData }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="bg-main text-white cursor-pointer absolute top-4 right-5"
-        >
-          <Plus />
-          Create Subscription
-        </Button>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          Edit
+          <DropdownMenuShortcut>
+            <SquarePen />
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>New Subscription</DialogTitle>
+          <DialogTitle>Edit Subscription</DialogTitle>
           <DialogDescription>
-            Add new subscription here. Click save when you&apos;re done.
+            Change your subscription data here. Click save when you&apos;re
+            done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={addSubscription}>
+        <form onSubmit={editSubscription}>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <label htmlFor="subscription">Subscription</label>
@@ -95,7 +99,7 @@ export const SubscriptionsDialog = ({ fetchData }) => {
                 id="subscription"
                 name="subscription"
                 placeholder="Netflix"
-                value={data.subscription}
+                value={newData.subscription}
                 onChange={handleChange}
                 required
               />
@@ -131,7 +135,7 @@ export const SubscriptionsDialog = ({ fetchData }) => {
                 id="due_date"
                 name="due_date"
                 type="date"
-                value={data.due_date}
+                value={new Date(newData?.due_date).toISOString().slice(0, 10)}
                 onChange={handleChange}
                 required
               />
@@ -143,7 +147,7 @@ export const SubscriptionsDialog = ({ fetchData }) => {
                 name="amount"
                 type="number"
                 placeholder="150000"
-                value={data.amount}
+                value={newData?.amount}
                 onChange={handleChange}
                 required
               />
@@ -200,4 +204,4 @@ export const SubscriptionsDialog = ({ fetchData }) => {
       </DialogContent>
     </Dialog>
   );
-};
+}

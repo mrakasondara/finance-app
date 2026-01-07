@@ -80,6 +80,29 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async updateSubscription(newData) {
+    try {
+      const response = await fetch(`${baseAPI}/subscriptions`, {
+        method: "PUT",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  static async deleteSubscription(id) {
+    try {
+      const response = await fetch(`${baseAPI}/subscriptions/${id}`, {
+        method: "DELETE",
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static getTransactions() {}
 }
 

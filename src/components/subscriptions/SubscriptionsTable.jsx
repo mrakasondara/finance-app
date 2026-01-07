@@ -14,11 +14,11 @@ import {
   TableRow,
 } from "../ui/table";
 import FinanceAPI from "@/lib/FinanceAPI";
-import { Spinner } from "../ui/spinner";
 import { SubscriptionsDialog } from "./SubscriptionsDialog";
 import { LoadingSpinner } from "../loading-spinner";
 import { Banknote, Landmark } from "lucide-react";
 import { transactionCategories } from "@/lib/transaction-categories";
+import { DropdownActions } from "./DropdownActions";
 
 const SubscriptionsTable = () => {
   const path = usePathname();
@@ -81,8 +81,11 @@ const SubscriptionsTable = () => {
             <TableHead className={"text-black dark:text-white font-semibold"}>
               Payment Method
             </TableHead>
-            <TableHead className="text-right text-black dark:text-white font-semibold">
+            <TableHead className=" text-black dark:text-white font-semibold">
               Status
+            </TableHead>
+            <TableHead className="text-right text-black dark:text-white font-semibold">
+              Actions
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -111,7 +114,7 @@ const SubscriptionsTable = () => {
                   )}
                   {subscription.payment_method}
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Badge
                     className={`capitalize ${
                       subscription.status == "paid"
@@ -122,13 +125,19 @@ const SubscriptionsTable = () => {
                     {subscription.status}
                   </Badge>
                 </TableCell>
+                <TableCell className={"text-right"}>
+                  <DropdownActions
+                    data={subscription}
+                    fetchData={fetchSubscriptions}
+                  />
+                </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
         <TableFooter>
           <TableRow className="font-semibold text-black dark:text-white">
-            <TableCell colSpan={5}>Total</TableCell>
+            <TableCell colSpan={6}>Total</TableCell>
             <TableCell className="text-right">Rp. {totalAmount}</TableCell>
           </TableRow>
         </TableFooter>
