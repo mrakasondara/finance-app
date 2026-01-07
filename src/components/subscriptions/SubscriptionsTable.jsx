@@ -113,7 +113,11 @@ const SubscriptionsTable = () => {
                 <TableCell>
                   {new Date(subscription.due_date).toLocaleDateString()}
                 </TableCell>
-                <TableCell>{subscription.amount}</TableCell>
+                <TableCell>
+                  {new Intl.NumberFormat(["ban", "id"]).format(
+                    subscription.amount
+                  )}
+                </TableCell>
                 <TableCell className="capitalize flex gap-1 items-center">
                   {subscription.payment_method == "bank" ? (
                     <Landmark className={"text-blue-500 text-right"} />
@@ -152,7 +156,9 @@ const SubscriptionsTable = () => {
         <TableFooter>
           <TableRow className="font-semibold text-black dark:text-white">
             <TableCell colSpan={isOverview ? 5 : 6}>Total</TableCell>
-            <TableCell className="text-right">Rp. {totalAmount}</TableCell>
+            <TableCell className="text-right">
+              Rp. {new Intl.NumberFormat(["ban", "id"]).format(totalAmount)}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
