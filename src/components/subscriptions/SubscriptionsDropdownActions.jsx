@@ -9,9 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SubscriptionsEditDialog } from "./SubscriptionsEditDialog";
-import { AlertDeleteDialog } from "./AlertDeleteDialog";
+import { SubscriptionsAlertDeleteDialog } from "./SubscriptionsAlertDeleteDialog";
 
-export const DropdownActions = ({ data, fetchData }) => {
+export const SubscriptionsDropdownActions = ({ data, fetchData }) => {
   const [open, setOpen] = useState(false);
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -21,10 +21,13 @@ export const DropdownActions = ({ data, fetchData }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <SubscriptionsEditDialog data={data} fetchData={fetchData} />
-          <AlertDeleteDialog
+          <SubscriptionsEditDialog
+            data={data}
+            fetchData={fetchData}
+            setOpenDropdown={setOpen}
+          />
+          <SubscriptionsAlertDeleteDialog
             id={data?._id}
             fetchData={fetchData}
             setOpenDropdown={setOpen}

@@ -27,7 +27,7 @@ import { Spinner } from "../ui/spinner";
 import FinanceAPI from "@/lib/FinanceAPI";
 import { toast } from "sonner";
 
-export function SubscriptionsEditDialog({ data, fetchData }) {
+export function SubscriptionsEditDialog({ data, fetchData, setOpenDropdown }) {
   const [newData, setNewData] = useState({
     subscription: data?.subscription ?? "",
     due_date: data?.due_date ?? "",
@@ -51,17 +51,19 @@ export function SubscriptionsEditDialog({ data, fetchData }) {
 
   const editSubscription = async (e) => {
     e.preventDefault();
+    setOpenDropdown(false);
     const subscriptionData = {
       ...newData,
       category,
       payment_method: paymentMethod,
       status,
-      _id: data._id,
     };
 
     setIsLoading(true);
+    const id = data._id;
     const { success, message } = await FinanceAPI.updateSubscription(
-      subscriptionData
+      subscriptionData,
+      id
     );
     setIsLoading(false);
     if (success) {

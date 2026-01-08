@@ -80,9 +80,9 @@ class FinanceAPI {
       console.error(error);
     }
   }
-  static async updateSubscription(newData) {
+  static async updateSubscription(newData, id) {
     try {
-      const response = await fetch(`${baseAPI}/subscriptions`, {
+      const response = await fetch(`${baseAPI}/subscriptions/${id}`, {
         method: "PUT",
         body: JSON.stringify(newData),
       });
@@ -116,6 +116,18 @@ class FinanceAPI {
     try {
       const response = await fetch(`${baseAPI}/transactions`, {
         method: "POST",
+        body: JSON.stringify(newData),
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  static async updateTransaction(newData, id) {
+    try {
+      const response = await fetch(`${baseAPI}/transactions/${id}`, {
+        method: "PUT",
         body: JSON.stringify(newData),
       });
       const data = response.json();

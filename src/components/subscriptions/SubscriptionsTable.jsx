@@ -18,7 +18,7 @@ import { SubscriptionsDialog } from "./SubscriptionsDialog";
 import { LoadingSpinner } from "../loading-spinner";
 import { Banknote, Landmark } from "lucide-react";
 import { transactionCategories } from "@/lib/transaction-categories";
-import { DropdownActions } from "./DropdownActions";
+import { SubscriptionsDropdownActions } from "./SubscriptionsDropdownActions";
 
 const SubscriptionsTable = () => {
   const path = usePathname();
@@ -143,7 +143,7 @@ const SubscriptionsTable = () => {
                   ""
                 ) : (
                   <TableCell className={"text-right"}>
-                    <DropdownActions
+                    <SubscriptionsDropdownActions
                       data={subscription}
                       fetchData={fetchSubscriptions}
                     />

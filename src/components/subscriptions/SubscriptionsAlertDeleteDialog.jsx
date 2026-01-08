@@ -16,12 +16,17 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 
-export const AlertDeleteDialog = ({ id, fetchData, setOpenDropdown }) => {
+export const SubscriptionsAlertDeleteDialog = ({
+  id,
+  fetchData,
+  setOpenDropdown,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const deleteSubscription = async (e) => {
     e.preventDefault();
+    setOpenDropdown(false);
 
     setIsLoading(true);
     setOpen(true);
@@ -32,7 +37,6 @@ export const AlertDeleteDialog = ({ id, fetchData, setOpenDropdown }) => {
     if (success) {
       toast.success(message);
       fetchData();
-      setOpenDropdown(false);
     } else {
       toast.error(message);
     }
