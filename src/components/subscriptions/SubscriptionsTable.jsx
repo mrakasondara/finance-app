@@ -118,7 +118,7 @@ const SubscriptionsTable = () => {
                     subscription.amount
                   )}
                 </TableCell>
-                <TableCell className="capitalize flex gap-1 items-center">
+                <TableCell className="capitalize flex gap-2 items-center">
                   {subscription.payment_method == "bank" ? (
                     <Landmark className={"text-blue-500 text-right"} />
                   ) : (

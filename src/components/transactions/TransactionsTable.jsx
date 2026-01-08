@@ -14,9 +14,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { LoadingSpinner } from "../loading-spinner";
-import { TransactionsDialog } from "./TransactionDialog";
+import { TransactionsDialog } from "./TransactionsDialog";
 import FinanceAPI from "@/lib/FinanceAPI";
 import { transactionCategories } from "@/lib/transaction-categories";
+import { TransactionsDropdownActions } from "./TransactionsDropdownActions";
 
 const TransactionsTable = () => {
   const path = usePathname();
@@ -43,7 +44,7 @@ const TransactionsTable = () => {
   }, []);
   return (
     <>
-      {isOverview ? "" : <TransactionsDialog />}
+      {isOverview ? "" : <TransactionsDialog fetchData={fetchTransactions} />}
 
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {isOverview ? (
@@ -73,9 +74,20 @@ const TransactionsTable = () => {
             <TableHead className="text-black dark:text-white font-semibold">
               Amount
             </TableHead>
-            <TableHead className="text-black dark:text-white font-semibold">
+            <TableHead
+              className={`text-black ${
+                isOverview ? "text-right" : "text-left"
+              } dark:text-white font-semibold`}
+            >
               Payment Method
             </TableHead>
+            {isOverview ? (
+              ""
+            ) : (
+              <TableHead className="text-right text-black dark:text-white font-semibold">
+                Actions
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -99,7 +111,11 @@ const TransactionsTable = () => {
                     transaction.amount
                   )}
                 </TableCell>
-                <TableCell className="capitalize flex gap-1 items-center">
+                <TableCell
+                  className={`capitalize flex gap-2 items-center ${
+                    isOverview ? "justify-end" : "justify-start"
+                  }`}
+                >
                   {transaction.payment_method == "bank" ? (
                     <Landmark className={"text-blue-500 text-right"} />
                   ) : (
@@ -107,13 +123,23 @@ const TransactionsTable = () => {
                   )}
                   {transaction.payment_method}
                 </TableCell>
+                {isOverview ? (
+                  ""
+                ) : (
+                  <TableCell className="text-right">
+                    <TransactionsDropdownActions
+                      data={transaction}
+                      fetchData={fetchTransactions}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
         </TableBody>
         <TableFooter>
           <TableRow className={"font-semibold"}>
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={isOverview ? 4 : 5}>Total</TableCell>
             <TableCell className="text-right">
               Rp. {new Intl.NumberFormat(["ban", "id"]).format(totalAmount)}
             </TableCell>

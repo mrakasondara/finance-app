@@ -136,6 +136,17 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async deleteTransaction(id) {
+    try {
+      const response = await fetch(`${baseAPI}/transactions/${id}`, {
+        method: "DELETE",
+      });
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default FinanceAPI;
