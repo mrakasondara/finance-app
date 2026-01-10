@@ -23,6 +23,47 @@ export async function GET(req) {
     const { _id } = await User.findOne({ email }).select("_id");
 
     switch (section) {
+      case "bill":
+        const bill = await Subscription.findOne({
+          user_id: _id,
+          status: "unpaid",
+          due_date: { $gte: new Date() },
+        })
+          .sort({ due_date: 1 })
+          .select("subscription amount due_date");
+
+        const payments = await Subscription.find({
+          user_id: _id,
+          status: "unpaid",
+        }).select("amount");
+
+        if (!bill) {
+          return NextResponse.json(
+            {
+              success: true,
+              message: "No active bills",
+            },
+            { status: 200 }
+          );
+        }
+
+        const totalPayment = payments.reduce(
+          (sum, item) => sum + item.amount,
+          0
+        );
+        return NextResponse.json(
+          {
+            success: true,
+            message: "Payment bills successfully fetched",
+            data: [
+              {
+                next_billings: bill,
+                total_payment: totalPayment,
+              },
+            ],
+          },
+          { status: 200 }
+        );
       case "transactions":
         const overviewTransactions = await Transaction.find({ user_id: _id })
           .sort({ date: -1 })
@@ -30,7 +71,7 @@ export async function GET(req) {
         return NextResponse.json(
           {
             success: true,
-            message: "Data overview fetched",
+            message: "Data transactions overview fetched",
             data: overviewTransactions,
           },
           { status: 200 }
@@ -42,7 +83,7 @@ export async function GET(req) {
         return NextResponse.json(
           {
             success: true,
-            message: "Data overview fetched",
+            message: "Data subscriptions overview fetched",
             data: overviewSubscriptions,
           },
           { status: 200 }
