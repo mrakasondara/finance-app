@@ -14,16 +14,12 @@ import {
   TableRow,
 } from "../ui/table";
 import FinanceAPI from "@/lib/FinanceAPI";
-import { SubscriptionsDialog } from "./SubscriptionsDialog";
 import { LoadingSpinner } from "../loading-spinner";
 import { Banknote, Landmark } from "lucide-react";
 import { transactionCategories } from "@/lib/transaction-categories";
-import { SubscriptionsDropdownActions } from "./SubscriptionsDropdownActions";
 
-const SubscriptionsTable = () => {
+const SubscriptionsOverview = () => {
   const path = usePathname();
-  const isOverview = !path?.startsWith("/dashboard/subscriptions");
-
   const [subscriptions, setSubscriptions] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +27,7 @@ const SubscriptionsTable = () => {
   const fetchSubscriptions = async () => {
     setIsLoading(true);
     try {
-      const response = await FinanceAPI.getSubcriptions();
+      const response = await FinanceAPI.getOverview("subscriptions");
       setSubscriptions(response);
       setIsLoading(false);
       setTotalAmount(response.data.reduce((sum, item) => sum + item.amount, 0));
@@ -46,14 +42,18 @@ const SubscriptionsTable = () => {
 
   return (
     <>
-      <SubscriptionsDialog fetchData={fetchSubscriptions} />
-
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {subscriptions?.data?.length ? (
-          ""
+          <TableCaption>
+            A list of your recent subscriptions.{" "}
+            <Link href={"/dashboard/subscriptions"} className="underline">
+              See your all subscriptions
+            </Link>
+          </TableCaption>
         ) : (
           <TableCaption>{subscriptions?.message}</TableCaption>
         )}
+
         <TableHeader>
           <TableRow>
             <TableHead
@@ -73,15 +73,8 @@ const SubscriptionsTable = () => {
             <TableHead className={"text-black dark:text-white font-semibold"}>
               Payment Method
             </TableHead>
-            <TableHead
-              className={`text-black dark:text-white font-semibold ${
-                isOverview ? "text-right" : "text-left"
-              }`}
-            >
+            <TableHead className="text-black dark:text-white font-semibold text-right">
               Status
-            </TableHead>
-            <TableHead className="text-right text-black dark:text-white font-semibold">
-              Actions
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -114,7 +107,7 @@ const SubscriptionsTable = () => {
                   )}
                   {subscription.payment_method}
                 </TableCell>
-                <TableCell className="text-left">
+                <TableCell className="text-right">
                   <Badge
                     className={`capitalize ${
                       subscription.status == "paid"
@@ -125,19 +118,13 @@ const SubscriptionsTable = () => {
                     {subscription.status}
                   </Badge>
                 </TableCell>
-                <TableCell className={"text-right"}>
-                  <SubscriptionsDropdownActions
-                    data={subscription}
-                    fetchData={fetchSubscriptions}
-                  />
-                </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
         <TableFooter>
           <TableRow className="font-semibold text-black dark:text-white">
-            <TableCell colSpan="6">Total</TableCell>
+            <TableCell colSpan="5">Total</TableCell>
             <TableCell className="text-right">
               Rp. {new Intl.NumberFormat(["ban", "id"]).format(totalAmount)}
             </TableCell>
@@ -152,4 +139,4 @@ const SubscriptionsTable = () => {
   );
 };
 
-export default SubscriptionsTable;
+export default SubscriptionsOverview;

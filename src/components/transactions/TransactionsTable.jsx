@@ -20,9 +20,6 @@ import { transactionCategories } from "@/lib/transaction-categories";
 import { TransactionsDropdownActions } from "./TransactionsDropdownActions";
 
 const TransactionsTable = () => {
-  const path = usePathname();
-  const isOverview = !path?.startsWith("/dashboard/transactions");
-
   const [transactions, setTransactions] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,22 +41,14 @@ const TransactionsTable = () => {
   }, []);
   return (
     <>
-      {isOverview ? "" : <TransactionsDialog fetchData={fetchTransactions} />}
+      <TransactionsDialog fetchData={fetchTransactions} />
 
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
-        {isOverview ? (
-          <TableCaption>
-            A list of your recent transactions.{" "}
-            <Link href={"/dashboard/transactions"} className="underline">
-              See your all transactions
-            </Link>
-          </TableCaption>
-        ) : transactions?.data?.length ? (
+        {transactions?.data?.length ? (
           ""
         ) : (
           <TableCaption>{transactions?.message}</TableCaption>
         )}
-
         <TableHeader>
           <TableRow>
             <TableHead className="text-black dark:text-white font-semibold">
@@ -74,20 +63,12 @@ const TransactionsTable = () => {
             <TableHead className="text-black dark:text-white font-semibold">
               Amount
             </TableHead>
-            <TableHead
-              className={`text-black ${
-                isOverview ? "text-right" : "text-left"
-              } dark:text-white font-semibold`}
-            >
+            <TableHead className="text-black dark:text-white font-semibold">
               Payment Method
             </TableHead>
-            {isOverview ? (
-              ""
-            ) : (
-              <TableHead className="text-right text-black dark:text-white font-semibold">
-                Actions
-              </TableHead>
-            )}
+            <TableHead className="text-right text-black dark:text-white font-semibold">
+              Actions
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -106,15 +87,21 @@ const TransactionsTable = () => {
                 <TableCell>
                   {new Date(transaction.date).toLocaleDateString()}
                 </TableCell>
-                <TableCell>
+                <TableCell
+                  className={`${
+                    transaction.transaction_type == "expense"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }`}
+                >
+                  {transaction.transaction_type == "expense" ? "-" : "+"}
                   {new Intl.NumberFormat(["ban", "id"]).format(
                     transaction.amount
                   )}
                 </TableCell>
                 <TableCell
-                  className={`capitalize flex gap-2 items-center ${
-                    isOverview ? "justify-end" : "justify-start"
-                  }`}
+                  className="capitalize flex gap-2 items-center
+                   justify-start"
                 >
                   {transaction.payment_method == "bank" ? (
                     <Landmark className={"text-blue-500 text-right"} />
@@ -123,23 +110,19 @@ const TransactionsTable = () => {
                   )}
                   {transaction.payment_method}
                 </TableCell>
-                {isOverview ? (
-                  ""
-                ) : (
-                  <TableCell className="text-right">
-                    <TransactionsDropdownActions
-                      data={transaction}
-                      fetchData={fetchTransactions}
-                    />
-                  </TableCell>
-                )}
+                <TableCell className="text-right">
+                  <TransactionsDropdownActions
+                    data={transaction}
+                    fetchData={fetchTransactions}
+                  />
+                </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
         <TableFooter>
           <TableRow className={"font-semibold"}>
-            <TableCell colSpan={isOverview ? 4 : 5}>Total</TableCell>
+            <TableCell colSpan="5">Total</TableCell>
             <TableCell className="text-right">
               Rp. {new Intl.NumberFormat(["ban", "id"]).format(totalAmount)}
             </TableCell>

@@ -147,6 +147,17 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async getOverview(section) {
+    try {
+      const response = await fetch(
+        `${baseAPI}/overview${section ? `?section=${section}` : ""}`
+      );
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default FinanceAPI;
