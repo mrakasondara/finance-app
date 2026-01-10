@@ -27,7 +27,14 @@ const TransactionsOverview = () => {
       const response = await FinanceAPI.getOverview("transactions");
       setTransactions(response);
       setIsLoading(false);
-      setTotalAmount(response.data.reduce((sum, item) => sum + item.amount, 0));
+      setTotalAmount(
+        response.data.reduce((sum, item) => {
+          if (item.transaction_type == "income") {
+            return sum + item.amount;
+          }
+          return sum - item.amount;
+        }, 0)
+      );
     } catch (error) {
       console.error(error);
     }

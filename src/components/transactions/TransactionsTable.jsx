@@ -18,6 +18,7 @@ import { TransactionsDialog } from "./TransactionsDialog";
 import FinanceAPI from "@/lib/FinanceAPI";
 import { transactionCategories } from "@/lib/transaction-categories";
 import { TransactionsDropdownActions } from "./TransactionsDropdownActions";
+import { TransactionsFilter } from "./TransactionsFilter";
 
 const TransactionsTable = () => {
   const [transactions, setTransactions] = useState(null);
@@ -30,7 +31,14 @@ const TransactionsTable = () => {
       const response = await FinanceAPI.getTransactions();
       setTransactions(response);
       setIsLoading(false);
-      setTotalAmount(response.data.reduce((sum, item) => sum + item.amount, 0));
+      setTotalAmount(
+        response.data.reduce((sum, item) => {
+          if (item.transaction_type == "income") {
+            return sum + item.amount;
+          }
+          return sum - item.amount;
+        }, 0)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +50,8 @@ const TransactionsTable = () => {
   return (
     <>
       <TransactionsDialog fetchData={fetchTransactions} />
+
+      <TransactionsFilter />
 
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {transactions?.data?.length ? (
