@@ -19,6 +19,7 @@ import { LoadingSpinner } from "../loading-spinner";
 import { Banknote, Landmark } from "lucide-react";
 import { transactionCategories } from "@/lib/transaction-categories";
 import { SubscriptionsDropdownActions } from "./SubscriptionsDropdownActions";
+import { SubscriptionsFilter } from "./SubscriptionsFilter";
 
 const SubscriptionsTable = () => {
   const path = usePathname();
@@ -28,10 +29,33 @@ const SubscriptionsTable = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [paymentMethodFilter, setPaymentMethodFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
+  const setFilter = {
+    setCategoryFilter,
+    setPaymentMethodFilter,
+    setStatusFilter,
+  };
+
+  const value = {
+    categoryFilter,
+    paymentMethodFilter,
+    statusFilter,
+  };
+
   const fetchSubscriptions = async () => {
     setIsLoading(true);
+    setCategoryFilter("");
+    setPaymentMethodFilter("");
+    setStatusFilter("");
     try {
-      const response = await FinanceAPI.getSubcriptions();
+      const response = await FinanceAPI.getSubcriptions({
+        category: categoryFilter,
+        payment_method: paymentMethodFilter,
+        status: statusFilter,
+      });
       setSubscriptions(response);
       setIsLoading(false);
       setTotalAmount(response.data.reduce((sum, item) => sum + item.amount, 0));
@@ -47,7 +71,11 @@ const SubscriptionsTable = () => {
   return (
     <>
       <SubscriptionsDialog fetchData={fetchSubscriptions} />
-
+      <SubscriptionsFilter
+        valueFilter={value}
+        setFilter={setFilter}
+        fetchData={fetchSubscriptions}
+      />
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {subscriptions?.data?.length ? (
           ""

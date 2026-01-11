@@ -14,10 +14,26 @@ export async function GET(req) {
     );
   }
   const { email } = token;
+
   try {
+    const { searchParams } = new URL(req.url);
+
+    const query = {};
+
+    const category = searchParams.get("category");
+    const payment_method = searchParams.get("payment_method");
+    const status = searchParams.get("status");
+
+    if (category) query.category = category;
+    if (payment_method) query.payment_method = payment_method;
+    if (status) query.status = status;
+
     await connectDB(mongoURI);
     const { _id } = await User.findOne({ email }).select("_id");
-    const userSubscriptions = await Subscription.find({ user_id: _id });
+    const userSubscriptions = await Subscription.find({
+      user_id: _id,
+      ...query,
+    });
     return NextResponse.json(
       {
         success: true,

@@ -1,4 +1,20 @@
 const baseAPI = "http://localhost:3000/api";
+
+function buildQuery(params = {}) {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (
+      value !== undefined &&
+      value !== null &&
+      value !== "" &&
+      value !== "all"
+    ) {
+      query.append(key, value);
+    }
+  });
+  return query.toString();
+}
+
 class FinanceAPI {
   static async register(userData) {
     try {
@@ -71,9 +87,13 @@ class FinanceAPI {
       console.error(error);
     }
   }
-  static async getSubcriptions() {
+  static async getSubcriptions(params = {}) {
+    const query = buildQuery(params);
+    const url = query
+      ? `${baseAPI}/subscriptions?${query}`
+      : `${baseAPI}/subscriptions`;
     try {
-      const response = await fetch(`${baseAPI}/subscriptions`);
+      const response = await fetch(url);
       const data = response.json();
       return data;
     } catch (error) {
