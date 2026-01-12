@@ -27,7 +27,7 @@ export async function GET(req) {
         const bill = await Subscription.findOne({
           user_id: _id,
           status: "unpaid",
-          due_date: { $gte: new Date() },
+          // due_date: { $gte: new Date() },
         })
           .sort({ due_date: 1 })
           .select("subscription amount due_date");

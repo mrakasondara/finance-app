@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { Badge } from "../ui/badge";
 import {
   Table,
@@ -22,9 +21,6 @@ import { SubscriptionsDropdownActions } from "./SubscriptionsDropdownActions";
 import { SubscriptionsFilter } from "./SubscriptionsFilter";
 
 const SubscriptionsTable = () => {
-  const path = usePathname();
-  const isOverview = !path?.startsWith("/dashboard/subscriptions");
-
   const [subscriptions, setSubscriptions] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -101,11 +97,7 @@ const SubscriptionsTable = () => {
             <TableHead className={"text-black dark:text-white font-semibold"}>
               Payment Method
             </TableHead>
-            <TableHead
-              className={`text-black dark:text-white font-semibold ${
-                isOverview ? "text-right" : "text-left"
-              }`}
-            >
+            <TableHead className="text-black dark:text-white font-semibold text-left">
               Status
             </TableHead>
             <TableHead className="text-right text-black dark:text-white font-semibold">

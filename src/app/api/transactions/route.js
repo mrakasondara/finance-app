@@ -16,11 +16,25 @@ export async function GET(req) {
 
   const { email } = token;
   try {
+    const { searchParams } = new URL(req.url);
+
+    const query = {};
+
+    const category = searchParams.get("category");
+    const payment_method = searchParams.get("payment_method");
+    const transaction_type = searchParams.get("transaction_type");
+
+    if (category) query.category = category;
+    if (payment_method) query.payment_method = payment_method;
+    if (transaction_type) query.transaction_type = transaction_type;
+
     await connectDB(mongoURI);
 
     const { _id } = await User.findOne({ email }).select("_id");
 
-    const transactions = await Transaction.find({ user_id: _id });
+    const transactions = await Transaction.find({ user_id: _id, ...query });
+
+    console.log(transactions);
 
     return NextResponse.json(
       {

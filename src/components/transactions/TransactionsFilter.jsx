@@ -17,15 +17,27 @@ import {
 import { Button } from "../ui/button";
 import { transactionCategories } from "@/lib/transaction-categories";
 
-export const TransactionsFilter = () => {
+export const TransactionsFilter = ({ valueFilter, setFilter, fetchData }) => {
+  const onFilterSubmit = (e) => {
+    e.preventDefault();
+    fetchData();
+  };
+
+  const onReset = (e) => {
+    e.preventDefault();
+    setFilter.setCategoryFilter("");
+    setFilter.setPaymentMethodFilter("");
+    setFilter.setTransactionTypeFilter("");
+    fetchData();
+  };
+
   return (
-    <form>
+    <form onSubmit={onFilterSubmit}>
       <div className="grid grid-cols-2 lg:grid-cols-7 gap-5">
         <div className="grid">
           <Select
-            defaultValue=""
-            // onValueChange={setTransactionType}
-            required
+            value={valueFilter.categoryFilter}
+            onValueChange={setFilter.setCategoryFilter}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by category" />
@@ -48,9 +60,8 @@ export const TransactionsFilter = () => {
 
         <div className="grid">
           <Select
-            defaultValue=""
-            // onValueChange={setTransactionType}
-            required
+            value={valueFilter.paymentMethodFilter}
+            onValueChange={setFilter.setPaymentMethodFilter}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by payment method" />
@@ -71,9 +82,8 @@ export const TransactionsFilter = () => {
 
         <div className="grid">
           <Select
-            defaultValue=""
-            // onValueChange={setTransactionType}
-            required
+            value={valueFilter.transactionTypeFilter}
+            onValueChange={setFilter.setTransactionTypeFilter}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by transaction type" />
@@ -91,14 +101,25 @@ export const TransactionsFilter = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button
-          type="submit"
-          variant="outline"
-          className="bg-main text-white cursor-pointer"
-        >
-          <Funnel />
-          Filter
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            onClick={onReset}
+            className="cursor-pointer"
+            type="cancel"
+          >
+            Reset
+          </Button>
+
+          <Button
+            type="submit"
+            variant="outline"
+            className="bg-main text-white cursor-pointer"
+          >
+            <Funnel />
+            Filter
+          </Button>
+        </div>
       </div>
     </form>
   );

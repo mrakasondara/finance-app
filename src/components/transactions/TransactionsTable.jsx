@@ -1,5 +1,5 @@
 "use client";
-import { Banknote, Film, Landmark } from "lucide-react";
+import { Banknote, Landmark } from "lucide-react";
 import {
   Table,
   TableCaption,
@@ -10,8 +10,6 @@ import {
   TableFooter,
   TableHead,
 } from "../ui/table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { LoadingSpinner } from "../loading-spinner";
 import { TransactionsDialog } from "./TransactionsDialog";
@@ -25,10 +23,29 @@ const TransactionsTable = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [paymentMethodFilter, setPaymentMethodFilter] = useState("");
+  const [transactionTypeFilter, setTransactionTypeFilter] = useState("");
+
+  const setFilter = {
+    setCategoryFilter,
+    setPaymentMethodFilter,
+    setTransactionTypeFilter,
+  };
+
+  const value = { categoryFilter, paymentMethodFilter, transactionTypeFilter };
+
   const fetchTransactions = async () => {
     setIsLoading(true);
+    setCategoryFilter("");
+    setPaymentMethodFilter("");
+    setTransactionTypeFilter("");
     try {
-      const response = await FinanceAPI.getTransactions();
+      const response = await FinanceAPI.getTransactions({
+        category: categoryFilter,
+        payment_method: paymentMethodFilter,
+        transaction_type: transactionTypeFilter,
+      });
       setTransactions(response);
       setIsLoading(false);
       setTotalAmount(
@@ -51,7 +68,11 @@ const TransactionsTable = () => {
     <>
       <TransactionsDialog fetchData={fetchTransactions} />
 
-      <TransactionsFilter />
+      <TransactionsFilter
+        valueFilter={value}
+        setFilter={setFilter}
+        fetchData={fetchTransactions}
+      />
 
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {transactions?.data?.length ? (

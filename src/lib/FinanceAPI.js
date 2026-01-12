@@ -123,9 +123,13 @@ class FinanceAPI {
       console.error(error);
     }
   }
-  static async getTransactions() {
+  static async getTransactions(params = {}) {
+    const query = buildQuery(params);
+    const url = query
+      ? `${baseAPI}/transactions?${query}`
+      : `${baseAPI}/transactions`;
     try {
-      const response = await fetch(`${baseAPI}/transactions`);
+      const response = await fetch(url);
       const data = response.json();
       return data;
     } catch (error) {
