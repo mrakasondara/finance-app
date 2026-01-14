@@ -35,6 +35,9 @@ const userSchema = new Schema(
     address: {
       type: String,
     },
+    image_thumb: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
