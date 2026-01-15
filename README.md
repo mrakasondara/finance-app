@@ -7,15 +7,22 @@ Dibangun menggunakan teknologi modern untuk memastikan keamanan, performa, dan u
 ## ✨ Fitur Utama
 
 ### 🔐 Authentication & Authorization
-
-        - Login & register menggunakan NextAuth
-        - Proteksi route berbasis session & token
+   - Login & register menggunakan NextAuth
+   - Proteksi route berbasis session & token
 
 ### 📊 Manajemen Keuangan
+   - Pencatatan pemasukan & pengeluaran
+   - Kategori transaksi yang fleksibel
+   - Perhitungan total income & expenses
 
-        - Pencatatan pemasukan & pengeluaran
-        - Kategori transaksi yang fleksibel
-        - Perhitungan total income & expenses
+### 🔔 Subscription & Billing
+- Tracking subscription aktif
+- Pengingat next billing date
+- Monitoring total pembayaran
+
+### 🧾Dashboard Interaktif
+- Ringkasan keuangan
+- Statistik transaksi
 
 ## 🛠️ Tech Stacks
 
