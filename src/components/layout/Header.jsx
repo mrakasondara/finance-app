@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Bell, LogOut, User } from "lucide-react";
 import {
   DropdownMenu,
@@ -17,13 +17,13 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import { SheetMenu } from "./SheetMenu";
 import { ModeToggle } from "../ui/ModeToggle";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 export default function Header() {
   const path = usePathname();
   const isAuth = path?.startsWith("/login") || path?.startsWith("/register");
-  const router = useRouter();
+  const { data } = useSession();
 
   return (
     <header
@@ -38,7 +38,10 @@ export default function Header() {
         <DropdownMenu className="mr-3">
           <DropdownMenuTrigger>
             <Avatar className={"h-10 w-auto"}>
-              <AvatarImage src="/profile/profile.png" alt="profile" />
+              <AvatarImage
+                src={data?.user.image ?? "/profile/default.png"}
+                alt="profile"
+              />
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent

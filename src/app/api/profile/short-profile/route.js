@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import { mongoURI } from "../../../../../constant";
 import { User } from "@/database/models/user";
+import { updateUserImageProfile } from "@/supabase/storage/client";
 
 export async function GET(req) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -18,6 +19,7 @@ export async function GET(req) {
     const userData = await User.findOne({ email }).select(
       "email first_name last_name bio address"
     );
+
     return NextResponse.json(
       {
         success: true,
@@ -45,28 +47,65 @@ export async function PUT(req) {
   const { email } = token;
   try {
     await connectDB(mongoURI);
-    const newData = await req.json();
-    const { first_name, last_name, bio, address } = newData;
+    const newData = await req.formData();
+    const { first_name, last_name, bio, address, image_thumb } =
+      Object.fromEntries(newData.entries());
 
-    const userData = await User.findOne({ email }).select(
-      "email first_name last_name bio address"
-    );
+    const userData = await User.findOne({ email }).select("_id image_thumb");
 
-    userData.first_name = first_name;
-    userData.last_name = last_name;
-    userData.bio = bio;
-    userData.address = address;
+    if (typeof image_thumb != "object") {
+      await User.updateOne(
+        { _id: userData._id },
+        {
+          first_name,
+          last_name,
+          bio,
+          address,
+        }
+      );
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Short Profile successfully updated",
+        },
+        { status: 200 }
+      );
+    } else {
+      const fileName = image_thumb.name;
+      const fileExtension = fileName.slice(fileName.lastIndexOf(".") + 1);
+      const newImage = `${userData._id}.${fileExtension}`;
+      const path = `user/${newImage}`;
 
-    await userData.save();
+      const isOldImage = userData.image_thumb;
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Short Profile successfully updated",
-        data: userData,
-      },
-      { status: 200 }
-    );
+      const { data, error } = await updateUserImageProfile({
+        path,
+        file: image_thumb,
+        isOldImage,
+      });
+
+      if (error) {
+        return new Error("Image update failed");
+      }
+
+      await User.updateOne(
+        { _id: userData._id },
+        {
+          first_name,
+          last_name,
+          bio,
+          address,
+          image_thumb: newImage,
+        }
+      );
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Short Profile successfully updated",
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       { success: false, message: error.message },

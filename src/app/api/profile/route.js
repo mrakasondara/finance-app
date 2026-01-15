@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { mongoURI } from "../../../../constant";
 import { User } from "@/database/models/user";
 import { getToken } from "next-auth/jwt";
+import { getUserImageProfile } from "@/supabase/storage/client";
 
 export async function GET(req) {
   const token = await getToken({
@@ -18,12 +19,19 @@ export async function GET(req) {
   const { email } = token;
   try {
     await connectDB(mongoURI);
-    const userData = await User.findOne({ email }).select("-password -__v");
+    const user = await User.findOne({ email }).select("-password -__v");
+    const imageThumb = user.image_thumb;
+
+    if (imageThumb) {
+      const { data, error } = await getUserImageProfile(imageThumb);
+      user.image_thumb = data.publicUrl;
+    }
+
     return NextResponse.json(
       {
         success: true,
         message: "Profile successfully fetched",
-        data: userData,
+        data: user,
       },
       { status: 200 }
     );

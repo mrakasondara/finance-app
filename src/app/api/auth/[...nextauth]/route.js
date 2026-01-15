@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { connectDB } from "@/database";
 import { User } from "@/database/models/user";
 import { mongoURI } from "../../../../../constant";
+import { getUserImageProfile } from "@/supabase/storage/client";
 
 export const authOptions = {
   providers: [
@@ -17,6 +18,11 @@ export const authOptions = {
         await connectDB(mongoURI);
 
         const user = await User.findOne({ email: credentials.email });
+        let image_thumb = "";
+        if (user.image_thumb) {
+          const { data, error } = await getUserImageProfile(user.image_thumb);
+          image_thumb = data.publicUrl;
+        }
 
         if (!user) {
           return null;
@@ -34,6 +40,7 @@ export const authOptions = {
         return {
           id: user._id.toString(),
           email: user.email,
+          image: image_thumb,
         };
       },
     }),

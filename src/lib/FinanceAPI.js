@@ -43,7 +43,7 @@ class FinanceAPI {
     try {
       const response = await fetch(`${baseAPI}/profile/short-profile`, {
         method: "PUT",
-        body: JSON.stringify(newData),
+        body: newData,
       });
       const data = response.json();
       return data;
