@@ -1,4 +1,3 @@
-import { SubscriptionsDialog } from "@/components/subscriptions/SubscriptionsDialog";
 import SubscriptionsTable from "@/components/subscriptions/SubscriptionsTable";
 
 export const metadata = {

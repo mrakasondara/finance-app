@@ -40,12 +40,19 @@ const Transactions = () => {
                 </CardTitle>
                 <CardDescription className={"text-white"}>
                   {data["next_billings"] ? (
-                    <p>
-                      {data["next_billings"]?.subscription} - Rp.{" "}
-                      {new Intl.NumberFormat(["ban", "id"]).format(
-                        data["next_billings"]?.amount
-                      )}
-                    </p>
+                    <>
+                      <p className="text-red-500 dark:text-white">
+                        {new Date(
+                          data["next_billings"].due_date
+                        ).toLocaleDateString()}
+                      </p>
+                      <p>
+                        {data["next_billings"]?.subscription} - Rp.{" "}
+                        {new Intl.NumberFormat(["ban", "id"]).format(
+                          data["next_billings"]?.amount
+                        )}
+                      </p>
+                    </>
                   ) : (
                     "No Active Bill"
                   )}

@@ -39,7 +39,7 @@ export default function Header() {
           <DropdownMenuTrigger>
             <Avatar className={"h-10 w-auto"}>
               <AvatarImage
-                src={data?.user.image ?? "/profile/default.png"}
+                src={data?.user.image ?? "/profile/default.jpg"}
                 alt="profile"
               />
             </Avatar>

@@ -15,7 +15,6 @@ export const getUserImageProfile = async (target) => {
 
 export const updateUserImageProfile = async ({ path, file, isOldImage }) => {
   const storage = getStorage();
-  console.log(isOldImage);
 
   if (isOldImage) {
     await deleteUserImageProfile(isOldImage);

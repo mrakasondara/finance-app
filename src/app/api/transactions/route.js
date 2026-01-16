@@ -33,9 +33,6 @@ export async function GET(req) {
     const { _id } = await User.findOne({ email }).select("_id");
 
     const transactions = await Transaction.find({ user_id: _id, ...query });
-
-    console.log(transactions);
-
     return NextResponse.json(
       {
         success: true,
