@@ -21,6 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Vaulto" />
+      </head>
       <body className={`${poppins.className} antialiased  bg-table`}>
         <ThemeProvider
           attribute="class"
