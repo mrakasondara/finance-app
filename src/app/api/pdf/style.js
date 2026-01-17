@@ -1,4 +1,10 @@
 import { StyleSheet, Font } from "@react-pdf/renderer";
+
+Font.register({
+  family: "Poppins",
+  src: "https://st.1001fonts.net/download/font/poppins.medium.ttf",
+});
+
 export const styles = StyleSheet.create({
   body: {
     paddingTop: 35,

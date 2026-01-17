@@ -31,7 +31,10 @@ export default function Header() {
         isAuth ? "hidden" : "flex"
       } items-center gap-3 px-5 py-4 z-50`}
     >
-      <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
+      <div className="flex gap-1 items-center">
+        <img src="/icons/logo.png" className="h-12" alt="vaulto-logo" />
+        <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
+      </div>
 
       <div className="flex gap-5 ml-auto items-center justify-items-end">
         <ModeToggle />

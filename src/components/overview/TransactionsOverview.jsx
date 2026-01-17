@@ -28,7 +28,7 @@ const TransactionsOverview = () => {
       setTransactions(response);
       setIsLoading(false);
       setTotalAmount(
-        response.data.reduce((sum, item) => {
+        response?.data?.reduce((sum, item) => {
           if (item.transaction_type == "income") {
             return sum + item.amount;
           }
