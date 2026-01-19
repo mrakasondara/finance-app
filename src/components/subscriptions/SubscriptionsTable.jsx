@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { Badge } from "../ui/badge";
 import {
   Table,
@@ -12,13 +11,14 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import FinanceAPI from "@/lib/FinanceAPI";
+import FinanceAPI, { buildQuery } from "@/lib/FinanceAPI";
 import { SubscriptionsDialog } from "./SubscriptionsDialog";
 import { LoadingSpinner } from "../loading-spinner";
 import { Banknote, Landmark } from "lucide-react";
 import { transactionCategories } from "@/lib/transaction-categories";
 import { SubscriptionsDropdownActions } from "./SubscriptionsDropdownActions";
 import { SubscriptionsFilter } from "./SubscriptionsFilter";
+import { Button } from "../ui/button";
 
 const SubscriptionsTable = () => {
   const [subscriptions, setSubscriptions] = useState(null);
@@ -41,16 +41,13 @@ const SubscriptionsTable = () => {
     statusFilter,
   };
 
-  const fetchSubscriptions = async () => {
+  const fetchSubscriptions = async ({ category, payment_method, status }) => {
     setIsLoading(true);
-    setCategoryFilter("");
-    setPaymentMethodFilter("");
-    setStatusFilter("");
     try {
       const response = await FinanceAPI.getSubcriptions({
-        category: categoryFilter,
-        payment_method: paymentMethodFilter,
-        status: statusFilter,
+        category,
+        payment_method,
+        status,
       });
       setSubscriptions(response);
       setIsLoading(false);
@@ -60,8 +57,26 @@ const SubscriptionsTable = () => {
     }
   };
 
+  const onExportPDF = () => {
+    const value = {
+      category: categoryFilter,
+      payment_method: paymentMethodFilter,
+      status: statusFilter,
+    };
+    const query = buildQuery(value);
+    const url = query
+      ? `${process.env.NEXT_PUBLIC_BASE_API}/pdf/subscriptions?${query}`
+      : `${process.env.NEXT_PUBLIC_BASE_API}/pdf/subscriptions`;
+
+    window.open(url, "_blank");
+  };
+
   useEffect(() => {
-    fetchSubscriptions();
+    fetchSubscriptions({
+      category: categoryFilter,
+      payment_method: paymentMethodFilter,
+      status: statusFilter,
+    });
   }, []);
 
   return (
@@ -72,6 +87,13 @@ const SubscriptionsTable = () => {
         setFilter={setFilter}
         fetchData={fetchSubscriptions}
       />
+      <Button
+        variant="outline"
+        className="block w-30 bg-main text-white cursor-pointer"
+        onClick={onExportPDF}
+      >
+        Export PDF
+      </Button>
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {subscriptions?.data?.length ? (
           ""

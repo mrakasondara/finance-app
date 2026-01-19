@@ -1,4 +1,4 @@
-import { Landmark, Banknote, Funnel } from "lucide-react";
+import { Landmark, Banknote, Funnel, Download } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -14,15 +14,19 @@ import { transactionCategories } from "@/lib/transaction-categories";
 export const SubscriptionsFilter = ({ valueFilter, setFilter, fetchData }) => {
   const onFilterSubmit = (e) => {
     e.preventDefault();
-    fetchData();
+    fetchData({
+      category: valueFilter.categoryFilter,
+      payment_method: valueFilter.paymentMethodFilter,
+      status: valueFilter.statusFilter,
+    });
   };
 
-  const onReset = (e) => {
+  const resetFilter = (e) => {
     e.preventDefault();
     setFilter.setCategoryFilter("");
     setFilter.setPaymentMethodFilter("");
     setFilter.setStatusFilter("");
-    fetchData();
+    fetchData({});
   };
 
   return (
@@ -91,10 +95,10 @@ export const SubscriptionsFilter = ({ valueFilter, setFilter, fetchData }) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <Button
             variant="outline"
-            onClick={onReset}
+            onClick={resetFilter}
             className="cursor-pointer"
             type="cancel"
           >

@@ -1,6 +1,6 @@
-const baseAPI = "http://localhost:3000/api";
+const baseAPI = process.env.NEXT_PUBLIC_BASE_API;
 
-function buildQuery(params = {}) {
+export function buildQuery(params = {}) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (

@@ -1,11 +1,11 @@
-import ReactPDF, { renderToStream } from "@react-pdf/renderer";
+import ReactPDF, { renderToStream, renderToFile } from "@react-pdf/renderer";
 import { SubscriptionsPDF } from "@/components/PDF/SubscriptionsPDF";
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { connectDB } from "@/database";
 import { User } from "@/database/models/user";
 import { Subscription } from "@/database/models/subscription";
-import { mongoURI } from "../../../../constant";
+import { mongoURI } from "../../../../../constant";
 
 export async function GET(req) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -34,7 +34,13 @@ export async function GET(req) {
   const userSubscriptions = await Subscription.find({
     user_id: _id,
     ...query,
-  }).sort({ due_date: -1 });
+  });
+
+  if (userSubscriptions.length) {
+    userSubscriptions.sort(
+      (a, b) => new Date(b.due_date) - new Date(a.due_date)
+    );
+  }
 
   const stream = await renderToStream(
     <SubscriptionsPDF data={userSubscriptions} email={email} />
