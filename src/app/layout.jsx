@@ -16,6 +16,9 @@ export const metadata = {
     default: "Vaulto",
   },
   description: "A Simple Finance App",
+  keywords: ["Next.js", "React", "JavaScript"],
+  authors: { name: "mrakasondara", url: "https://mrakasondara.netlify.app/" },
+  creator: "mrakasondara",
 };
 
 export default function RootLayout({ children }) {

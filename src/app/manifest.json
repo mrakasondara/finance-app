@@ -1,6 +1,7 @@
 {
   "name": "Vaulto - Finance App",
   "short_name": "Vaulto",
+  "author": "mrakasondara",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
