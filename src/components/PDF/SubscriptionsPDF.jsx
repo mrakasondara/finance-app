@@ -48,7 +48,12 @@ export const SubscriptionsPDF = ({ data, email }) => {
                   <Text style={styles.tableCell}>
                     {new Date(subscription.due_date).toLocaleDateString()}
                   </Text>
-                  <Text style={styles.tableCell}>{subscription.amount}</Text>
+                  <Text style={styles.tableCell}>
+                    Rp.{" "}
+                    {new Intl.NumberFormat(["ban", "id"]).format(
+                      subscription.amount
+                    )}
+                  </Text>
                   <Text style={styles.tableCell}>
                     {subscription.payment_method}
                   </Text>

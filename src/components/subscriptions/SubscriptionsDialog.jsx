@@ -63,7 +63,7 @@ export const SubscriptionsDialog = ({ fetchData }) => {
     if (success) {
       toast.success(message);
       setOpen(false);
-      fetchData();
+      fetchData({});
     } else {
       toast.error(message);
     }

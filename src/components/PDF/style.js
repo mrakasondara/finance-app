@@ -75,4 +75,10 @@ export const styles = StyleSheet.create({
   empty: {
     textAlign: "center",
   },
+  income: {
+    color: "#59ac77",
+  },
+  expense: {
+    color: "#fb2c36",
+  },
 });
