@@ -13,10 +13,11 @@ import {
 import { useState, useEffect } from "react";
 import { LoadingSpinner } from "../loading-spinner";
 import { TransactionsDialog } from "./TransactionsDialog";
-import FinanceAPI from "@/lib/FinanceAPI";
+import FinanceAPI, { buildQuery } from "@/lib/FinanceAPI";
 import { transactionCategories } from "@/lib/transaction-categories";
 import { TransactionsDropdownActions } from "./TransactionsDropdownActions";
 import { TransactionsFilter } from "./TransactionsFilter";
+import { Button } from "../ui/button";
 
 const TransactionsTable = () => {
   const [transactions, setTransactions] = useState(null);
@@ -35,19 +36,19 @@ const TransactionsTable = () => {
 
   const value = { categoryFilter, paymentMethodFilter, transactionTypeFilter };
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async ({
+    category,
+    payment_method,
+    transaction_type,
+  }) => {
     setIsLoading(true);
-    setCategoryFilter("");
-    setPaymentMethodFilter("");
-    setTransactionTypeFilter("");
     try {
       const response = await FinanceAPI.getTransactions({
-        category: categoryFilter,
-        payment_method: paymentMethodFilter,
-        transaction_type: transactionTypeFilter,
+        category,
+        payment_method,
+        transaction_type,
       });
       setTransactions(response);
-      setIsLoading(false);
       setTotalAmount(
         response.data.reduce((sum, item) => {
           if (item.transaction_type == "income") {
@@ -58,11 +59,32 @@ const TransactionsTable = () => {
       );
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const onExportPDF = () => {
+    const value = {
+      category: categoryFilter,
+      payment_method: paymentMethodFilter,
+      transaction_type: transactionTypeFilter,
+    };
+
+    const query = buildQuery(value);
+    const url = query
+      ? `${process.env.NEXT_PUBLIC_BASE_API}/pdf/transactions?${query}`
+      : `${process.env.NEXT_PUBLIC_BASE_API}/pdf/transactions`;
+
+    window.open(url, "_blank");
+  };
+
   useEffect(() => {
-    fetchTransactions();
+    fetchTransactions({
+      category: categoryFilter,
+      payment_method: paymentMethodFilter,
+      transactions_type: transactions,
+    });
   }, []);
   return (
     <>
@@ -73,6 +95,14 @@ const TransactionsTable = () => {
         setFilter={setFilter}
         fetchData={fetchTransactions}
       />
+
+      <Button
+        variant="outline"
+        className="block w-30 bg-main text-white cursor-pointer"
+        onClick={onExportPDF}
+      >
+        Export PDF
+      </Button>
 
       <Table className={`bg-table ${isLoading ? "hidden" : ""}`}>
         {transactions?.data?.length ? (

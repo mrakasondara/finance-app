@@ -71,7 +71,7 @@ export const TransactionsDialog = ({ fetchData }) => {
     if (success) {
       toast.success(message);
       setOpen(false);
-      fetchData();
+      fetchData({});
     } else {
       toast.error(message);
     }

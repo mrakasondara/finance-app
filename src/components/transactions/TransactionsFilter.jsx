@@ -20,7 +20,11 @@ import { transactionCategories } from "@/lib/transaction-categories";
 export const TransactionsFilter = ({ valueFilter, setFilter, fetchData }) => {
   const onFilterSubmit = (e) => {
     e.preventDefault();
-    fetchData();
+    fetchData({
+      category: valueFilter.categoryFilter,
+      payment_method: valueFilter.paymentMethodFilter,
+      transaction_type: valueFilter.transactionTypeFilter,
+    });
   };
 
   const onReset = (e) => {
@@ -28,7 +32,7 @@ export const TransactionsFilter = ({ valueFilter, setFilter, fetchData }) => {
     setFilter.setCategoryFilter("");
     setFilter.setPaymentMethodFilter("");
     setFilter.setTransactionTypeFilter("");
-    fetchData();
+    fetchData({});
   };
 
   return (
@@ -60,6 +64,28 @@ export const TransactionsFilter = ({ valueFilter, setFilter, fetchData }) => {
 
         <div className="grid">
           <Select
+            value={valueFilter.transactionTypeFilter}
+            onValueChange={setFilter.setTransactionTypeFilter}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Filter by transaction type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Transaction Type</SelectLabel>
+                <SelectItem value="income" className="text-green-500">
+                  <BanknoteArrowUp className="text-green-500" /> Income
+                </SelectItem>
+                <SelectItem value="expense" className="text-red-500">
+                  <BanknoteArrowDown className="text-red-500" /> Expense
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid">
+          <Select
             value={valueFilter.paymentMethodFilter}
             onValueChange={setFilter.setPaymentMethodFilter}
           >
@@ -80,27 +106,6 @@ export const TransactionsFilter = ({ valueFilter, setFilter, fetchData }) => {
           </Select>
         </div>
 
-        <div className="grid">
-          <Select
-            value={valueFilter.transactionTypeFilter}
-            onValueChange={setFilter.setTransactionTypeFilter}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Filter by transaction type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Transaction Type</SelectLabel>
-                <SelectItem value="income" className="text-green-500">
-                  <BanknoteArrowUp className="text-green-500" /> Income
-                </SelectItem>
-                <SelectItem value="expense" className="text-red-500">
-                  <BanknoteArrowDown className="text-red-500" /> Expense
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
         <div className="flex gap-3">
           <Button
             variant="outline"
