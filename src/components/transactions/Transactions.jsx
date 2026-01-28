@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BanknoteArrowDown, Calendar } from "lucide-react";
+import { motion } from "motion/react";
 import FinanceAPI from "@/lib/FinanceAPI";
 import TransactionsOverview from "../overview/TransactionsOverview";
 import { Card, CardHeader, CardTitle, CardDescription } from "../ui/card";
@@ -31,8 +32,12 @@ const Transactions = () => {
         {isLoading ? (
           <LoadingSpinner isLoading={isLoading} message={"Loading Bills..."} />
         ) : (
-          <>
-            <Card className={"bg-main/60 dark:bg-table"}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9 }}
+          >
+            <Card className={"bg-main/60 dark:bg-table mb-4"}>
               <CardHeader>
                 <Calendar color="#ffffff" />
                 <CardTitle className={"text-white"}>
@@ -60,7 +65,7 @@ const Transactions = () => {
               </CardHeader>
             </Card>
 
-            <Card className={"bg-blue-500/60 dark:bg-table"}>
+            <Card className={"bg-blue-500/60 dark:bg-table mb-5"}>
               <CardHeader>
                 <BanknoteArrowDown color="#ffffff" />
                 <CardTitle className={"text-white"}>Total Payment</CardTitle>
@@ -78,7 +83,7 @@ const Transactions = () => {
                 </CardDescription>
               </CardHeader>
             </Card>
-          </>
+          </motion.div>
         )}
       </div>
     </div>
