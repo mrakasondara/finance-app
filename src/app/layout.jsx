@@ -1,9 +1,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
+import { Footer } from "@/components/layout/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,19 +26,12 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="apple-mobile-web-app-title" content="Vaulto" />
       </head>
-      <body className={`${poppins.className} antialiased  bg-table`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Providers>
-            <Toaster position="top-right" />
-            <Header />
-            {children}
-          </Providers>
-        </ThemeProvider>
+      <body className={`${poppins.className} antialiased bg-table`}>
+        <Providers>
+          <Toaster position="top-right" />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

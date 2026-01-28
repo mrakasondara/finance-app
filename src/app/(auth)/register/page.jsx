@@ -10,7 +10,7 @@ export const metadata = {
 export default async function Register() {
   const user = await getServerSession();
   if (user) {
-    redirect("/", RedirectType.replace);
+    redirect("/dashboard", RedirectType.replace);
   }
   return (
     <div className="flex h-screen text-black bg-white">

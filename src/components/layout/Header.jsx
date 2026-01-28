@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Bell, LogOut, User } from "lucide-react";
+import { motion } from "motion/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +33,14 @@ export default function Header() {
       } items-center gap-3 px-5 py-4 z-50`}
     >
       <div className="flex gap-1 items-center">
-        <img src="/icons/logo.png" className="h-12" alt="vaulto-logo" />
+        <motion.img
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.6 }}
+          src="/icons/logo.png"
+          className="h-12"
+          alt="vaulto-logo"
+        />
         <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
       </div>
 
