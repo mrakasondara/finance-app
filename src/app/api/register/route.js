@@ -31,6 +31,15 @@ export async function POST(req) {
       password: hashedPassword,
     });
 
+    const isEmailExist = await User.findOne({ email });
+
+    if (isEmailExist) {
+      return NextResponse.json(
+        { success: false, message: "Email has been registered" },
+        { status: 400 }
+      );
+    }
+
     const user = newUser.save();
 
     return NextResponse.json(
@@ -39,7 +48,7 @@ export async function POST(req) {
     );
   } catch (error) {
     return NextResponse.json(
-      { success: "false", message: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
