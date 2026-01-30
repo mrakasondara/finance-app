@@ -1,4 +1,5 @@
 "use client";
+import { easeInOut, motion } from "motion/react";
 import { redirect, RedirectType } from "next/navigation";
 import { HeaderLanding } from "../layout/HeaderLanding";
 import { Button } from "../ui/button";
@@ -11,7 +12,12 @@ export const Hero = () => {
         className="h-[40rem] lg:h-[45rem] w-full absolute top-0 -z-1"
       />
       <HeaderLanding />
-      <div className="flex flex-col items-center text-center gap-5 mt-[10rem]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.7, ease: easeInOut }}
+        className="flex flex-col items-center text-center gap-5 mt-[10rem]"
+      >
         <h3 className="text-md text-green-500 border border-main py-2 px-3 rounded-xl font-bold">
           Finance Management App
         </h3>
@@ -28,8 +34,11 @@ export const Hero = () => {
         >
           Get Started
         </Button>
-      </div>
-      <img
+      </motion.div>
+      <motion.img
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 0.7, ease: easeInOut }}
         src="/landing-page/preview.jpeg"
         className="w-1/2 md:w-[30%] absolute top-[100%] scale-170 left-[50%] right-[50%] -translate-1/2 shadow rounded-lg"
         alt="preview"
