@@ -8,7 +8,7 @@ export const Footer = () => {
     <footer
       className={`${
         isAuth ? "hidden" : "flex justify-between"
-      } items-center gap-3 px-5 py-2`}
+      } items-center gap-3 px-5 py-2 mt-[5rem] lg:mt-[2rem]`}
     >
       <div className="flex gap-1 items-center justify-center">
         <img
@@ -22,8 +22,8 @@ export const Footer = () => {
         <h1 className="text-2xl font-bold text-main">Vaulto</h1>
       </div>
       <p className="text-sm">
-        &copy; {new Date().getFullYear()} Vaulto - Finance App. All right
-        reserved
+        &copy; {new Date().getFullYear()} Vaulto - Finance App. {""}
+        <span className="hidden lg:inline">All right reserved</span>
       </p>
     </footer>
   );
