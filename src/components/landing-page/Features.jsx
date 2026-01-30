@@ -1,6 +1,13 @@
+"use client";
+import { easeInOut, motion } from "motion/react";
 export const Features = () => {
   return (
-    <div className="flex flex-col justify-center gap-4 mb-[3rem] py-[3rem] px-[3rem] bg-green-100/70">
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: easeInOut }}
+      className="flex flex-col justify-center gap-4 mb-[3rem] py-[3rem] px-[3rem] bg-green-100/70"
+    >
       <span className="w-[100px] text-main backdrop-blur-lg backdrop-brightness-150 bg-main/30 py-1.4 text-center rounded-full font-semibold mx-auto text-[15px]">
         Features
       </span>
@@ -11,7 +18,7 @@ export const Features = () => {
         Streamlined tools to help you manage, monitor, and optimize your
         finances with confidence.
       </p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 mt-[2rem] gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 mt-[2rem] gap-7">
         <div className="px-5 py-[2rem] flex flex-col gap-2 bg-white rounded-4xl">
           <h6 className="text-xl font-semibold">
             Smarter tracking, clearer insights.
@@ -44,6 +51,6 @@ export const Features = () => {
           /> */}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -1,9 +1,16 @@
+"use client";
+import { easeInOut, motion } from "motion/react";
 import { ShoppingCart, ClipboardClock, ChartColumnBig } from "lucide-react";
 import { Avatar } from "../ui/avatar";
 
 export const FeatureOverview = () => {
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 p-4 px-[3rem] gap-x-[5rem] gap-y-20 mt-[10rem] md:mt-[16rem] lg:mt-[17rem] mb-[3rem]">
+    <motion.div
+      initial={{ opacity: 0.3 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: easeInOut }}
+      className="grid md:grid-cols-2 lg:grid-cols-3 p-4 px-[3rem] gap-x-[5rem] gap-y-20 mt-[10rem] md:mt-[16rem] lg:mt-[17rem] mb-[3rem]"
+    >
       <div className="flex flex-col items-center gap-y-1 justify-center">
         <Avatar className="w-[50px] h-[50px] rounded-[50%] bg-main/70 text-white flex items-center justify-center">
           <ShoppingCart />
@@ -31,6 +38,6 @@ export const FeatureOverview = () => {
           All expenses, one clear view—full transparency for a healthier wallet.
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
