@@ -6,7 +6,7 @@ export const ReviewItem = ({ id, name, job, review, animation }) => {
   return (
     <TabsContent
       value={`review-${id}`}
-      className="mt-5 md:mt-0 flex flex-col shadow-lg lg:w-3/4 rounded-lg p-3 gap-1 h-full"
+      className="mt-5 md:mt-0 mx-auto flex flex-col shadow-lg lg:w-3/4 rounded-lg p-3 gap-1 h-full"
     >
       <motion.div
         variants={animation.motions}
