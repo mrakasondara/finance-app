@@ -39,8 +39,8 @@ export const Hero = () => {
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         transition={{ duration: 0.7, ease: easeInOut }}
-        src="/landing-page/preview.jpeg"
-        className="w-1/2 md:w-[30%] absolute top-[100%] scale-170 left-[50%] right-[50%] -translate-1/2 shadow rounded-lg"
+        src="/landing-page/preview2.jpeg"
+        className="w-1/2 md:w-[40%] lg:w-[30%] absolute top-[100%] scale-170 left-[50%] right-[50%] -translate-1/2 shadow rounded-lg"
         alt="preview"
       />
     </section>

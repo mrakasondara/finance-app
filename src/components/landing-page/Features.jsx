@@ -40,15 +40,15 @@ export const Features = () => {
             Track your spending, anytime.
           </h6>
           <p className="text-sm text-slate-400">
-            Visualize your financial activity with detailed statistics by month,
-            week, and day. Instantly see your transaction patterns with
+            Visualize your financial activity with detailed statistics by last
+            month, and week. Instantly see your transaction patterns with
             easy-to-read charts.
           </p>
-          {/* <img
-            src="/landing-page/transactions.png"
-            alt="transaction"
+          <img
+            src="/landing-page/statistic.jpeg"
+            alt="statistic"
             className="w-full lg:w-3/4 lg:mx-auto mt-3"
-          /> */}
+          />
         </div>
       </div>
     </motion.div>
