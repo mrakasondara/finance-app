@@ -136,6 +136,15 @@ class FinanceAPI {
       console.error(error);
     }
   }
+  static async getTransactionsStatistic() {
+    try {
+      const response = await fetch(`${baseAPI}/statistic`);
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static async addTransactions(newData) {
     try {
       const response = await fetch(`${baseAPI}/transactions`, {

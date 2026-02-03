@@ -21,9 +21,9 @@ export const Footer = () => {
         />
         <h1 className="text-2xl font-bold text-main">Vaulto</h1>
       </div>
-      <p className="text-sm">
+      <p className="text-[10px] md:text-sm">
         &copy; {new Date().getFullYear()} Vaulto - Finance App. {""}
-        <span className="hidden lg:inline">All right reserved</span>
+        <span className="hidden lg:inline-block">All right reserved</span>
       </p>
     </footer>
   );

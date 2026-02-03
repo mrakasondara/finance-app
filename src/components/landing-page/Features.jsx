@@ -11,7 +11,7 @@ export const Features = () => {
       <span className="w-[100px] text-main backdrop-blur-lg backdrop-brightness-150 bg-main/30 py-1.4 text-center rounded-full font-semibold mx-auto text-[15px]">
         Features
       </span>
-      <h5 className="text-2xl mx-auto text-[#090b0f] font-bold">
+      <h5 className="text-2xl mx-auto text-[#090b0f] font-bold text-center">
         Empowering Financial Clarity
       </h5>
       <p className="-mt-3 mx-auto text-slate-400 text-sm text-center">

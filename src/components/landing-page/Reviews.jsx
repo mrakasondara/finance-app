@@ -9,7 +9,7 @@ export const Reviews = () => {
       initial={{ x: -50, opacity: 0 }}
       whileInView={{ x: 0, opacity: 1 }}
       transition={{ type: "spring", delay: 0.1 }}
-      className="flex flex-col justify-center gap-4 -mt-[4rem] mb-[3rem] py-[1rem] px-[3rem]"
+      className="flex flex-col justify-center gap-4 -mt-[4rem] mb-[3rem] py-[1rem] pb-[3rem] px-[3rem]"
     >
       <span className="w-[100px] text-main backdrop-blur-lg backdrop-brightness-150 bg-main/30 py-1.4 text-center rounded-full font-semibold mx-auto text-[15px]">
         Reviews

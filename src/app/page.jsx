@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function Page() {
   return (
-    <div className="flex flex-col gap-[5rem] overflow-x-hidden">
+    <div className="flex flex-col gap-[5rem] overflow-x-hidden pb-[4rem] md:pb-0">
       <Hero />
       <FeatureOverview />
       <Features />

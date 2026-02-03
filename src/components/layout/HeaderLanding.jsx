@@ -1,12 +1,13 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import { motion } from "motion/react";
 import { Button } from "../ui/button";
 
 export const HeaderLanding = () => {
   const path = usePathname();
   const isAuth = path?.startsWith("/login") || path?.startsWith("/register");
-  // const { data } = useSession();
+  const { data } = useSession();
 
   return (
     <header
@@ -27,12 +28,20 @@ export const HeaderLanding = () => {
       </div>
 
       <div className=" flex gap-5 ml-auto items-center justify-items-end">
-        <Button className="text-white bg-mute transition hover:bg-green-500 hover:text-white cursor-pointer border-0 ">
-          Login
+        {data ? (
+          <Button className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main" onClick={()=> signOut()}>
+          Logout
         </Button>
-        <Button className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main">
-          Register
-        </Button>
+        ) : (
+          <>
+            <Button className="text-white bg-mute transition hover:bg-green-500 hover:text-white cursor-pointer border-0 ">
+              Login
+            </Button>
+            <Button className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main">
+              Register
+            </Button>
+          </>
+        )}
       </div>
     </header>
   );

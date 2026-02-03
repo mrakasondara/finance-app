@@ -49,7 +49,7 @@ export const SheetMenu = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={"/"}
+                  href={"/dashboard"}
                   className="text-[17px] flex-row items-center gap-2"
                 >
                   <ChartPie />
