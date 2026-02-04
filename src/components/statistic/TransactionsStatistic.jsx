@@ -95,9 +95,10 @@ export const TransactionsStatistic = () => {
 
   const totalValue = useMemo(() => {
     if (!transactions.data) return { week: 0, month: 0 };
-    const month = income.month - expense.month;
-    const week = income.week - expense.week;
-
+    const month =
+      (!income.month ? 0 : income.month) - (!expense.month ? 0 : expense.month);
+    const week =
+      (!income.week ? 0 : income.week) - (!expense.week ? 0 : expense.week);
     return { month, week };
   }, [transactions]);
 
@@ -133,11 +134,6 @@ export const TransactionsStatistic = () => {
                     {chartConfig[chart].label}
                   </span>
                   <span className="text-lg leading-none font-bold sm:text-3xl">
-                    {!income[key] || !expense[key]
-                      ? ""
-                      : income[key] > expense[key]
-                      ? ""
-                      : "-"}
                     {totalValue[key].toLocaleString()}
                   </span>
                 </button>

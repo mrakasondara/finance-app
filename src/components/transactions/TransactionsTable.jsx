@@ -37,9 +37,9 @@ const TransactionsTable = () => {
   const value = { categoryFilter, paymentMethodFilter, transactionTypeFilter };
 
   const fetchTransactions = async ({
-    category,
-    payment_method,
-    transaction_type,
+    category = "",
+    payment_method = "",
+    transaction_type = "",
   }) => {
     setIsLoading(true);
     try {
