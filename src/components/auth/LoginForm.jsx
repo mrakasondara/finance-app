@@ -41,7 +41,7 @@ export default function LoginForm() {
   return (
     <>
       <h2 className="text-2xl font-bold">
-        Hey, Welcome Back to <span className="text-main">Vaulto</span>
+        Hey, Welcome Back to <span className="text-main">Arthavo</span>
       </h2>
       <p className="text-[13px]">Login and manage your financial</p>
       <form

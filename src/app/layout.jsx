@@ -11,11 +11,11 @@ const poppins = Poppins({
 
 export const metadata = {
   title: {
-    template: "%s | Vaulto",
-    default: "Vaulto",
+    template: "%s | Arthavo",
+    default: "Arthavo",
   },
-  description: "Vaulto A Simple Finance App",
-  keywords: ["Next.js", "React", "JavaScript", "Vaulto", "mrakasondara"],
+  description: "Arthavo A Simple Finance App",
+  keywords: ["Next.js", "React", "JavaScript", "Arthavo", "mrakasondara"],
   authors: { name: "mrakasondara", url: "https://mrakasondara.netlify.app/" },
   creator: "mrakasondara",
 };
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="apple-mobile-web-app-title" content="Vaulto" />
+        <meta name="apple-mobile-web-app-title" content="Arthavo" />
       </head>
       <body className={`${poppins.className} antialiased bg-table`}>
         <Providers>

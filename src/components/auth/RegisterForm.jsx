@@ -41,7 +41,7 @@ export default function RegisterForm() {
     <>
       <h2 className="text-2xl font-bold">Get Started</h2>
       <p className="text-[13px]">
-        Welcome to <span className="text-main">Vaulto</span>- Let's create your
+        Welcome to <span className="text-main">Arthavo</span>- Let's create your
         account
       </p>
 

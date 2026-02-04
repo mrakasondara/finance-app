@@ -6,7 +6,7 @@ import { RedirectType, redirect } from "next/navigation";
 import { TransactionsStatistic } from "@/components/statistic/TransactionsStatistic";
 
 export const metadata = {
-  title: "Dashboard Vaulto",
+  title: "Dashboard Arthavo",
 };
 
 export default async function Home() {

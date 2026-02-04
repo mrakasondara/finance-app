@@ -38,11 +38,11 @@ export const SheetMenu = () => {
         <SheetHeader className="absolute">
           <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
           <SheetDescription className="sr-only">
-            Sidebar Menu of Vaulto
+            Sidebar Menu of Arthavo
           </SheetDescription>
         </SheetHeader>
         <h1 className="text-2xl font-bold text-main dark:text-white mt-4.5">
-          Vaulto
+          Arthavo
         </h1>
         <div className="mt-3 list-none">
           <NavigationMenu className={"flex-col items-start gap-5"}>

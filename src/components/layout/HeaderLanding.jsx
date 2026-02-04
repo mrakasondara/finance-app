@@ -22,16 +22,19 @@ export const HeaderLanding = () => {
           transition={{ duration: 0.6 }}
           src="/icons/logo.png"
           className="h-12"
-          alt="vaulto-logo"
+          alt="arthavo-logo"
         />
-        <h1 className="text-2xl font-bold text-white">Vaulto</h1>
+        <h1 className="text-2xl font-bold text-white">Arthavo</h1>
       </div>
 
       <div className=" flex gap-5 ml-auto items-center justify-items-end">
         {data ? (
-          <Button className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main" onClick={()=> signOut()}>
-          Logout
-        </Button>
+          <Button
+            className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main"
+            onClick={() => signOut()}
+          >
+            Logout
+          </Button>
         ) : (
           <>
             <Button className="text-white bg-mute transition hover:bg-green-500 hover:text-white cursor-pointer border-0 ">

@@ -77,7 +77,7 @@ export const SubscriptionsPDF = ({ data, email }) => {
         )}
 
         <View style={styles.footer}>
-          <Text>&copy; {new Date().getFullYear()} Vaulto - Finance App</Text>
+          <Text>&copy; {new Date().getFullYear()} Arthavo - Finance App</Text>
           <Text>Printed on {new Date().toLocaleString()}</Text>
         </View>
       </Page>

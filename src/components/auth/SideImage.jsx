@@ -2,7 +2,7 @@ export default function SideImage() {
   return (
     <div className="hidden md:flex md:w-1/2 relative">
       <h2 className="text-2xl absolute top-5 md:left-6 lg:left-15 text-white font-bold">
-        Vaulto
+        Arthavo
       </h2>
       <img src={"/background/finance.jpg"} className="object-cover" />
       <div className="grid w-full absolute bottom-20 md:left-6 lg:left-15 text-white ">

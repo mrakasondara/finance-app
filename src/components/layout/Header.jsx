@@ -39,9 +39,9 @@ export default function Header() {
           transition={{ duration: 0.6 }}
           src="/icons/logo.png"
           className="h-12"
-          alt="vaulto-logo"
+          alt="Arthavo-logo"
         />
-        <h1 className="text-2xl font-bold text-main mr-auto">Vaulto</h1>
+        <h1 className="text-2xl font-bold text-main mr-auto">Arthavo</h1>
       </div>
 
       <div className="flex gap-5 ml-auto items-center justify-items-end">

@@ -4,7 +4,7 @@ import { Hero } from "@/components/landing-page/Hero";
 import { Reviews } from "@/components/landing-page/Reviews";
 
 export const metadata = {
-  title: "Vaulto Finance App",
+  title: "Arthavo Finance App",
 };
 
 export default async function Page() {

@@ -17,12 +17,12 @@ export const Footer = () => {
           transition={{ duration: 0.6 }}
           src="/icons/logo.png"
           className="h-12"
-          alt="vaulto-logo"
+          alt="arthavo-logo"
         />
-        <h1 className="text-2xl font-bold text-main">Vaulto</h1>
+        <h1 className="text-2xl font-bold text-main">Arthavo</h1>
       </div>
       <p className="text-[10px] md:text-sm">
-        &copy; {new Date().getFullYear()} Vaulto - Finance App. {""}
+        &copy; {new Date().getFullYear()} Arthavo - Finance App. {""}
         <span className="hidden lg:inline-block">All right reserved</span>
       </p>
     </footer>
