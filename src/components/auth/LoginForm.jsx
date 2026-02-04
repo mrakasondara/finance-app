@@ -75,12 +75,12 @@ export default function LoginForm() {
         </div>
 
         <div className="flex flex-col gap-2 items-start w-full md:w-[75%] lg:w-1/2">
-          <Link
-            href={"/forgot"}
-            className="text-main hover:underline mb-4 text-[12px]"
+          <a
+            className="text-main hover:underline mb-4 text-[12px] cursor-pointer"
+            onClick={() => toast.info("Coming soon!")}
           >
             Forgot password?
-          </Link>
+          </a>
 
           <Button className="btn bg-main border-main hover:bg-white hover:text-main w-full mx-auto rounded-lg cursor-pointer">
             {isLoading ? <Spinner /> : ""}
