@@ -14,8 +14,8 @@ export const metadata = {
     template: "%s | Vaulto",
     default: "Vaulto",
   },
-  description: "A Simple Finance App",
-  keywords: ["Next.js", "React", "JavaScript"],
+  description: "Vaulto A Simple Finance App",
+  keywords: ["Next.js", "React", "JavaScript", "Vaulto", "mrakasondara"],
   authors: { name: "mrakasondara", url: "https://mrakasondara.netlify.app/" },
   creator: "mrakasondara",
 };
