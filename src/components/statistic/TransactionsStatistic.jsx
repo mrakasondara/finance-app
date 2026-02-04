@@ -53,8 +53,9 @@ export const TransactionsStatistic = () => {
         ? transactions.data.lastWeek
             ?.filter((data) => data.transaction_type == "income")
             .reduce((acc, curr) => acc + curr.amount, 0)
-        : weekChartData?.filter((data) => data.transaction_type == "income")[0]
-            ?.amount
+        : transactions.data.lastWeek?.filter(
+            (data) => data.transaction_type == "income"
+          )[0]?.amount
       : 0;
     const month = transactions.data.lastMonth[0]
       ? transactions.data.lastMonth.length > 1
@@ -76,8 +77,9 @@ export const TransactionsStatistic = () => {
         ? transactions.data.lastWeek
             ?.filter((data) => data.transaction_type == "expense")
             .reduce((acc, curr) => acc + curr.amount, 0)
-        : weekChartData?.filter((data) => data.transaction_type == "expense")[0]
-            ?.amount
+        : transactions.data.lastWeek?.filter(
+            (data) => data.transaction_type == "expense"
+          )[0]?.amount
       : 0;
     const month = transactions.data.lastMonth[0]
       ? transactions.data.lastMonth.length > 1
