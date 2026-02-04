@@ -1,26 +1,30 @@
-# 💰 Finance App
+# 💰 Arthavo Finance App
 
-Finance App adalah aplikasi manajemen keuangan berbasis web yang membantu pengguna mencatat pemasukan, pengeluaran, subscription, serta memantau kondisi keuangan secara real-time dengan tampilan modern dan responsif.
+Arthavo Finance App adalah aplikasi manajemen keuangan berbasis web yang membantu pengguna mencatat pemasukan, pengeluaran, subscription, serta memantau kondisi keuangan secara real-time dengan tampilan modern dan responsif.
 
 Dibangun menggunakan teknologi modern untuk memastikan keamanan, performa, dan user experience yang optimal.
 
 ## ✨ Fitur Utama
 
 ### 🔐 Authentication & Authorization
-   - Login & register menggunakan NextAuth
-   - Proteksi route berbasis session & token
+
+- Login & register menggunakan NextAuth
+- Proteksi route berbasis session & token
 
 ### 📊 Manajemen Keuangan
-   - Pencatatan pemasukan & pengeluaran
-   - Kategori transaksi yang fleksibel
-   - Perhitungan total income & expenses
+
+- Pencatatan pemasukan & pengeluaran
+- Kategori transaksi yang fleksibel
+- Perhitungan total income & expenses
 
 ### 🔔 Subscription & Billing
+
 - Tracking subscription aktif
 - Pengingat next billing date
 - Monitoring total pembayaran
 
 ### 🧾Dashboard Interaktif
+
 - Ringkasan keuangan
 - Statistik transaksi
 
