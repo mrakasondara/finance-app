@@ -108,7 +108,7 @@ export const TransactionsStatistic = () => {
   return (
     <>
       <LoadingSpinner isLoading={isLoading} message={"Fetching Statistic..."} />
-      <Card className={`py-4 sm:py-0`}>
+      <Card className={`py-4 sm:py-0 ${isLoading ? "hidden" : ""}`}>
         <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
           <div className="flex flex-1 flex-col justify-center gap-1 px-6 pb-3 sm:pb-0">
             <CardTitle>Transaction Statistic</CardTitle>
