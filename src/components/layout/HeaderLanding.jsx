@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { Button } from "../ui/button";
 
@@ -37,12 +38,18 @@ export const HeaderLanding = () => {
           </Button>
         ) : (
           <>
-            <Button className="text-white bg-mute transition hover:bg-green-500 hover:text-white cursor-pointer border-0 ">
+            <Link
+              href={"/login"}
+              className="text-white bg-mute transition hover:bg-green-500 hover:text-white cursor-pointer border-0 py-1.5 px-3 rounded-md"
+            >
               Login
-            </Button>
-            <Button className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main">
+            </Link>
+            <Link
+              href={"/register"}
+              className="text-white bg-green-500 cursor-pointer border-0 transition hover:backdrop-blur-sm hover:bg-white/30  hover:text-main py-1.5 px-3 rounded-md"
+            >
               Register
-            </Button>
+            </Link>
           </>
         )}
       </div>
